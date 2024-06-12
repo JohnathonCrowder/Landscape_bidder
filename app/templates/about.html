@@ -1,13 +1,124 @@
 {% extends 'base.html' %}
 
-{% block title %}About{% endblock %}
+{% block title %}About BidScape{% endblock %}
 
 {% block content %}
-<h1 class="text-4xl font-bold mb-4">About Us</h1>
-<p class="text-lg mb-8">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed id mi sed lorem vehicula mollis. Suspendisse potenti. Nullam ac risus at orci vulputate laoreet. Donec nibh mauris, tincidunt eu risus in, placerat faucibus nulla. Suspendisse potenti. Aliquam erat volutpat.
-</p>
-<p class="text-lg mb-8">
-    Curabitur in neque nibh. Sed consequat, dui vel maximus bibendum, nunc augue iaculis nunc, vitae bibendum enim mi eget enim. Suspendisse ullamcorper quam ac lorem vehicula, sed facilisis tellus facilisis. Donec gravida nulla quis mi hendrerit, eu pharetra lorem venenatis.
-</p>
+<div class="bg-gradient-to-r from-blue-500 to-green-400 text-white py-20">
+    <div class="container mx-auto px-6 text-center">
+        <h1 class="text-5xl font-extrabold mb-4 leading-tight">The Story Behind BidScape</h1>
+        <p class="text-xl mb-8 max-w-3xl mx-auto leading-relaxed">
+            Born from a landscaper's frustration, crafted by tech innovators, and perfected by industry experts. BidScape is more than software—it's your partner in growth.
+        </p>
+    </div>
+</div>
+
+<section class="py-20 bg-white">
+    <div class="container mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div>
+                <h2 class="text-4xl font-bold text-gray-800 mb-6">From Dirt to Data</h2>
+                <p class="text-xl text-gray-700 mb-6 leading-relaxed">
+                    Our founder, Mike Green, spent 15 years running his landscape business. His biggest hurdle? Inaccurate bids that ate into profits. Tired of guesswork, he teamed up with data scientists to create BidScape.
+                </p>
+                <p class="text-xl text-gray-700 leading-relaxed">
+                    Today, BidScape uses real-time market data and machine learning to generate bids that are 98% accurate. That's the power of dirt and data combined.
+                </p>
+            </div>
+            <div class="relative">
+                <img src="https://images.unsplash.com/photo-1614624532983-4ce03382d63d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1031&q=80" alt="Landscaper using tablet" class="rounded-lg shadow-xl">
+                <div class="absolute -bottom-4 -right-4 bg-green-500 text-white px-6 py-2 rounded-full font-semibold shadow-lg">
+                    98% Accuracy
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-20 bg-gray-50">
+    <div class="container mx-auto px-6">
+        <h2 class="text-4xl font-bold text-center text-gray-800 mb-12">The Minds Behind BidScape</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300 text-center">
+                <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80" alt="Mike Green" class="w-32 h-32 mx-auto rounded-full mb-4 object-cover">
+                <h3 class="text-xl font-semibold mb-2">Mike Green</h3>
+                <p class="text-gray-600 mb-4">Founder, Ex-Landscaper</p>
+                <p class="text-gray-700">"BidScape is the tool I wish I had when I was running my landscaping business."</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300 text-center">
+                <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80" alt="Sarah Coder" class="w-32 h-32 mx-auto rounded-full mb-4 object-cover">
+                <h3 class="text-xl font-semibold mb-2">Sarah Coder</h3>
+                <p class="text-gray-600 mb-4">CTO, Data Scientist</p>
+                <p class="text-gray-700">"We've turned landscape data into a precise science, so you don't have to guess."</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300 text-center">
+                <img src="https://images.unsplash.com/photo-1587620962725-abab7fe55159?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80" alt="Tom Landscape" class="w-32 h-32 mx-auto rounded-full mb-4 object-cover">
+                <h3 class="text-xl font-semibold mb-2">Tom Landscape</h3>
+                <p class="text-gray-600 mb-4">Advisor, Landscape Architect</p>
+                <p class="text-gray-700">"BidScape understands the nuances of landscaping. It's not just numbers; it's expertise."</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-20 bg-green-600 text-white text-center relative overflow-hidden">
+    <div class="absolute inset-0 opacity-20">
+        <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80" alt="Lush Garden" class="w-full h-full object-cover">
+    </div>
+    <div class="container mx-auto px-6 relative z-10 max-w-4xl">
+        <h2 class="text-4xl font-extrabold mb-6">Trusted by Top Landscapers</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 items-center">
+            <img src="path_to_logo1.png" alt="Landscape Co 1" class="w-full h-auto filter brightness-0 invert">
+            <img src="path_to_logo2.png" alt="Landscape Co 2" class="w-full h-auto filter brightness-0 invert">
+            <img src="path_to_logo3.png" alt="Landscape Co 3" class="w-full h-auto filter brightness-0 invert">
+            <img src="path_to_logo4.png" alt="Landscape Co 4" class="w-full h-auto filter brightness-0 invert">
+        </div>
+    </div>
+</section>
+
+<section class="py-20 bg-white">
+    <div class="container mx-auto px-6">
+        <h2 class="text-4xl font-bold text-center text-gray-800 mb-12">The BidScape Difference</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
+            <div class="bg-gray-50 rounded-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-4">Data That Digs Deep</h3>
+                <p class="text-gray-700 leading-relaxed mb-6">
+                    We don't just pull numbers out of thin air. BidScape taps into a vast network of suppliers, historical project data, and real-time market trends to give you the most accurate pricing possible.
+                </p>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li class="mb-2">Supplier Integration: Direct feeds from major suppliers</li>
+                    <li class="mb-2">Project History: Learn from past successes (and mistakes)</li>
+                    <li class="mb-2">Market Pulse: Adjust for seasonal and regional factors</li>
+                </ul>
+            </div>
+            <div class="bg-gray-50 rounded-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-4">Built by Landscapers, for Landscapers</h3>
+                <p class="text-gray-700 leading-relaxed mb-6">
+                    BidScape isn't just another tech product. It's crafted by people who've walked in your work boots. We understand the challenges of over-ordering mulch or underestimating labor.
+                </p>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li class="mb-2">Intuitive Interface: No tech degree required</li>
+                    <li class="mb-2">Industry-Specific: Tailored to landscape workflows</li>
+                    <li class="mb-2">Continuous Improvement: Your feedback shapes our updates</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-20 bg-blue-600 text-white text-center">
+    <div class="container mx-auto px-6">
+        <h2 class="text-4xl font-extrabold mb-6">Join the BidScape Revolution</h2>
+        <p class="text-xl mb-12 max-w-3xl mx-auto leading-relaxed">
+            Over 10,000 landscape pros have already transformed their businesses with BidScape. Will you be the next success story?
+        </p>
+        <div class="space-x-4">
+            <a href="#" class="bg-white text-blue-600 hover:bg-blue-50 font-bold py-4 px-12 rounded-full text-xl transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg inline-block">
+                Start Free Trial
+            </a>
+            <a href="{{ url_for('main.bid_estimator') }}" class="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-12 rounded-full text-xl transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg inline-block">
+                Try Estimator Demo
+            </a>
+        </div>
+    </div>
+</section>
 {% endblock %}
