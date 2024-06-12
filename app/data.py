@@ -31,6 +31,18 @@ LANDSCAPE_ITEMS = {
         {'name': 'Fertilization (per 1000 sq ft)', 'price': 60},
         {'name': 'Leaf Removal (flat fee)', 'price': 200},
     ],
+     'machines': [
+        {'name': 'Skid Steer (per day)', 'price': 250},
+        {'name': 'Mini Excavator (per day)', 'price': 300},
+        {'name': 'Trencher (per day)', 'price': 200},
+        {'name': 'Stump Grinder (per day)', 'price': 180},
+        {'name': 'Chipper (per day)', 'price': 150},
+        {'name': 'Lawn Aerator (per day)', 'price': 100},
+        {'name': 'Sod Cutter (per day)', 'price': 120},
+        {'name': 'Tracked Wheelbarrow (per day)', 'price': 80},
+        {'name': 'Tractor with Attachments (per day)', 'price': 400},
+        {'name': 'Leaf Vacuum/Blower (per day)', 'price': 90},
+    ],
     'outdoor_living': [
         {'name': 'Patio Installation (per 100 sq ft)', 'price': 800},
         {'name': 'Deck Installation (per 100 sq ft)', 'price': 1200},
