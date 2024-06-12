@@ -16,6 +16,10 @@ def about():
 def contact():
     return render_template('contact.html', title='Contact Us')
 
+@bp.route('/login')
+def login():
+    return render_template('login.html', title='Login')
+
 @bp.route('/bid-estimator', methods=['GET', 'POST'])
 def bid_estimator():
     if request.method == 'POST':
