@@ -20,6 +20,14 @@ def contact():
 def login():
     return render_template('login.html', title='Login')
 
+@bp.route('/signup')
+def signup():
+    return render_template('signup.html', title='Sign Up')
+
+@bp.route('/forgot-password')
+def forgot_password():
+    return render_template('forgot_password.html', title='Forgot Password')
+
 @bp.route('/bid-estimator', methods=['GET', 'POST'])
 def bid_estimator():
     if request.method == 'POST':
