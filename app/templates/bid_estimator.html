@@ -3,188 +3,97 @@
 {% block title %}Bid Estimator{% endblock %}
 
 {% block content %}
-<div class="max-w-5xl mx-auto px-4 py-12">
-    <h1 class="text-5xl font-extrabold text-gray-900 mb-6 leading-tight">
-        Landscape Bid <span class="text-blue-600">Estimator</span>
-    </h1>
-    <p class="text-xl text-gray-700 mb-12 leading-relaxed">
-        Transform your bidding process with our intuitive estimator. Select items, set quantities, and receive instant, data-driven estimates for your landscaping projects.
-    </p>
-    <div class="mt-8 text-center">
-        <p class="text-2xl font-semibold">Real-time Estimate: <span id="realtime-total" class="text-green-600">$0</span></p>
-    </div>
-
-    <form method="POST" action="{{ url_for('main.bid_estimator') }}" class="mb-16">
-        <div class="space-y-6">
-            <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                <button type="button" class="accordion-toggle w-full py-4 px-6 bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold text-left flex items-center justify-between transition-all duration-300" data-target="accordion-plants">
-                    <span class="text-lg">Plants</span>
-                    <svg class="w-6 h-6 transform transition-transform duration-300 accordion-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                    </svg>
-                </button>
-                <div id="accordion-plants" class="accordion-content px-6 py-4 hidden">
-                    {% for category, items in landscape_items.items() %}
-                    {% if category in ['trees', 'shrubs', 'ground_cover'] %}
-                    <div class="bg-gray-50 rounded-lg mb-4">
-                        <button type="button" class="nested-accordion-toggle w-full py-2 px-4 text-gray-800 font-semibold text-left flex items-center justify-between transition-all duration-300" data-target="accordion-{{ category }}">
-                            <span class="text-base capitalize">{{ category.replace('_', ' ') }}</span>
-                            <svg class="w-4 h-4 transform transition-transform duration-300 accordion-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                            </svg>
-                        </button>
-                        <div id="accordion-{{ category }}" class="nested-accordion-content px-4 py-2 hidden">
-                            {% for item in items %}
-                            <div class="flex items-center justify-between mb-2 last:mb-0">
-                                <label for="{{ category }}_{{ item.name }}" class="text-sm text-gray-700 flex-grow">{{ item.name }}</label>
-                                <span class="text-sm font-semibold text-green-600 mr-2">${{ item.price }}</span>
-                                <input type="number" id="{{ category }}_{{ item.name }}" name="{{ category }}_{{ item.name }}" min="0" value="0" class="w-16 px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                            </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
-                </div>
-            </div>
-
-            {% for category, items in landscape_items.items() %}
-            {% if category not in ['trees', 'shrubs', 'ground_cover', 'machines'] %}
-            <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                <button type="button" class="accordion-toggle w-full py-4 px-6 bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold text-left flex items-center justify-between transition-all duration-300" data-target="accordion-{{ category }}">
-                    <span class="text-lg capitalize">{{ category.replace('_', ' ') }}</span>
-                    <svg class="w-6 h-6 transform transition-transform duration-300 accordion-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                    </svg>
-                </button>
-                <div id="accordion-{{ category }}" class="accordion-content px-6 py-4 hidden">
-                    {% for item in items %}
-                    <div class="flex items-center justify-between mb-4 last:mb-0">
-                        <label for="{{ category }}_{{ item.name }}" class="text-lg text-gray-700 flex-grow">{{ item.name }}</label>
-                        <span class="text-lg font-semibold text-green-600 mr-4">${{ item.price }}</span>
-                        <input type="number" id="{{ category }}_{{ item.name }}" name="{{ category }}_{{ item.name }}" min="0" value="0" class="w-24 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-            {% endif %}
-            {% endfor %}
-
-            <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                <button type="button" class="accordion-toggle w-full py-4 px-6 bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold text-left flex items-center justify-between transition-all duration-300" data-target="accordion-machines">
-                    <span class="text-lg">Machines</span>
-                    <svg class="w-6 h-6 transform transition-transform duration-300 accordion-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                    </svg>
-                </button>
-                <div id="accordion-machines" class="accordion-content px-6 py-4 hidden">
-                    {% for item in landscape_items.machines %}
-                    <div class="flex items-center justify-between mb-4 last:mb-0">
-                        <label for="machines_{{ item.name }}" class="text-lg text-gray-700 flex-grow">{{ item.name }}</label>
-                        <span class="text-lg font-semibold text-green-600 mr-4">${{ item.price }}</span>
-                        <input type="number" id="machines_{{ item.name }}" name="machines_{{ item.name }}" min="0" value="0" class="w-24 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-
-        </div>
-        <div class="mt-12 flex justify-center space-x-4">
-            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
-                Generate Estimate
-            </button>
-            <button type="button" id="clear-btn" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-8 rounded-full text-lg transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
-                Clear
-            </button>
-        </div>
-    </form>
-
-    {% if total_cost > 0 %}
-<div id="estimate-box" class="bg-green-50 border-l-8 border-green-500 p-8 rounded-md shadow-xl animate__animated animate__fadeIn">
-        <div class="flex items-center mb-6">
-            <svg class="w-12 h-12 text-green-500 mr-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-            </svg>
-            <h3 class="text-3xl font-bold text-gray-800">Your Estimate is Ready!</h3>
-        </div>
-        <p class="text-4xl font-extrabold text-green-600 mb-6">${{ total_cost }}</p>
-        <p class="text-gray-700 text-base leading-relaxed mb-6">This estimate is based on the items and quantities you selected. Actual costs may vary depending on project specifics, site conditions, and local market factors. We recommend a site visit for a more precise quote.</p>
-        <div class="flex space-x-4">
-            <a href="#" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded transition duration-300 ease-in-out">Download PDF</a>
-            <a href="#" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded transition duration-300 ease-in-out">Email Estimate</a>
+<div class="bg-gradient-to-r from-blue-500 to-green-400 text-white py-20">
+    <div class="container mx-auto px-6 text-center">
+        <h1 class="text-5xl font-extrabold mb-4 leading-tight">Precision Bidding at Your Fingertips</h1>
+        <p class="text-xl mb-8 max-w-3xl mx-auto leading-relaxed">
+            Say goodbye to guesswork. Our advanced estimator taps into real-time data to give you bids that are accurate down to the last dollar. Watch your profitability soar.
+        </p>
+        <div class="bg-white text-green-600 py-4 px-6 rounded-full inline-block font-bold text-2xl shadow-lg">
+            Live Estimate: <span id="realtime-total" class="ml-2">$0</span>
         </div>
     </div>
-    {% endif %}
-
-    <section class="mt-24 bg-gray-50 p-12 rounded-xl shadow-inner">
-        <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Why Choose Our Bid Estimator?</h2>
-        <ul class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <li class="flex items-start bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-                <svg class="w-12 h-12 text-blue-500 mr-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd"></path>
-                </svg>
-                <div>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Save Time</h3>
-                    <p class="text-gray-700">Get instant estimates with our pre-set common landscaping items, streamlining your bidding process.</p>
-                </div>
-            </li>
-            <li class="flex items-start bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-                <svg class="w-12 h-12 text-blue-500 mr-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                </svg>
-                <div>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Boost Accuracy</h3>
-                    <p class="text-gray-700">Our regularly updated prices ensure your bids are always competitive and accurate.</p>
-                </div>
-            </li>
-            <li class="flex items-start bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-                <svg class="w-12 h-12 text-blue-500 mr-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"></path>
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"></path>
-                </svg>
-                <div>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Win More Bids</h3>
-                    <p class="text-gray-700">Data-driven pricing helps you strike the perfect balance between profitability and competitiveness.</p>
-                </div>
-            </li>
-            <li class="flex items-start bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-                <svg class="w-12 h-12 text-blue-500 mr-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
-                    <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z"></path>
-                </svg>
-                <div>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Professional Edge</h3>
-                    <p class="text-gray-700">Impress clients with polished, detailed estimates that showcase your expertise and attention to detail.</p>
-                </div>
-            </li>
-            <li class="flex items-start bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-                <svg class="w-12 h-12 text-blue-500 mr-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M7 2a1 1 0 00-.707 1.707L7 4.414v3.758a1 1 0 01-.293.707l-4 4C.817 14.769 2.156 18 4.828 18h10.343c2.673 0 4.012-3.231 2.122-5.121l-4-4A1 1 0 0113 8.172V4.414l.707-.707A1 1 0 0013 2H7zm2 6.172V4h2v4.172a3 3 0 00.879 2.12l1.027 1.028a4 4 0 00-2.171.102l-.47.156a4 4 0 01-2.53 0l-.563-.187a1.993 1.993 0 00-.114-.035l1.063-1.063A3 3 0 009 8.172z" clip-rule="evenodd"></path>
-                </svg>
-                <div>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Machine Cost Management</h3>
-                    <p class="text-gray-700">Accurately estimate daily machine costs to optimize your equipment usage and project timelines.</p>
-                </div>
-            </li>
-        </ul>
-    </section>
-
-    <footer class="bg-gray-800 text-white py-12 mt-24">
-        <div class="container mx-auto text-center">
-            <h2 class="text-3xl font-bold mb-4">Ready to streamline your bids?</h2>
-            <p class="text-lg mb-8">Join thousands of landscaping professionals who trust our Bid Estimator.</p>
-            <a href="#" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300 ease-in-out">
-                Start Your Free Trial
-            </a>
-            <p class="mt-12 text-sm">&copy; 2023 Flask Azure App. All rights reserved.</p>
-        </div>
-    </footer>
 </div>
+
+<section class="py-20 bg-white">
+    <div class="container mx-auto px-6">
+        <form method="POST" action="{{ url_for('main.bid_estimator') }}" class="space-y-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                {% for category, items in landscape_items.items() %}
+                <div class="bg-gray-50 rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out">
+                    <button type="button" class="accordion-toggle w-full py-6 px-8 bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold text-left flex items-center justify-between transition-all duration-300" data-target="accordion-{{ category }}">
+                        <span class="text-xl capitalize">{{ category.replace('_', ' ') }}</span>
+                        <svg class="w-6 h-6 transform transition-transform duration-300 accordion-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                    <div id="accordion-{{ category }}" class="accordion-content px-8 py-6 hidden">
+                        {% for item in items %}
+                        <div class="flex items-center justify-between mb-6 last:mb-0">
+                            <label for="{{ category }}_{{ item.name }}" class="text-lg text-gray-700 flex-grow pr-4">{{ item.name }}</label>
+                            <span class="text-lg font-semibold text-green-600 mr-4">${{ item.price }}</span>
+                            <input type="number" id="{{ category }}_{{ item.name }}" name="{{ category }}_{{ item.name }}" min="0" value="0" class="w-24 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="flex justify-center space-x-6">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-12 rounded-full text-xl transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                    Generate Estimate
+                </button>
+                <button type="button" id="clear-btn" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-4 px-12 rounded-full text-xl transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                    Clear All
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+
+{% if total_cost > 0 %}
+<section class="py-20 bg-gray-50">
+    <div class="container mx-auto px-6">
+        <div id="estimate-box" class="bg-white rounded-xl shadow-2xl p-12 max-w-4xl mx-auto animate__animated animate__fadeIn">
+            <div class="flex items-center justify-center mb-8">
+                <svg class="w-16 h-16 text-green-500 mr-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <h3 class="text-4xl font-extrabold text-gray-800">Your Estimate is Ready!</h3>
+            </div>
+            <p class="text-5xl font-extrabold text-green-600 mb-8 text-center">${{ total_cost }}</p>
+            <p class="text-gray-700 text-lg leading-relaxed mb-8">This estimate is based on the items and quantities you selected. Keep in mind that actual costs may vary depending on project specifics, site conditions, and local market factors. We recommend a site visit for a more precise quote.</p>
+            <div class="flex justify-center space-x-4">
+                <a href="#" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                    Download PDF
+                </a>
+                <a href="#" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                    Email Estimate
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<section class="py-20 bg-blue-600 text-white text-center">
+    <div class="container mx-auto px-6">
+        <h2 class="text-4xl font-extrabold mb-6">Unlock Your Bidding Potential</h2>
+        <p class="text-xl mb-12 max-w-3xl mx-auto leading-relaxed">
+            With BidScape, you're not just estimating—you're strategizing. Our data-driven approach gives you a competitive edge in every bid.
+        </p>
+        <a href="#" class="bg-white text-blue-600 hover:bg-blue-50 font-bold py-4 px-12 rounded-full text-2xl transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg inline-block">
+            Start 14-Day Free Trial
+        </a>
+        <p class="mt-6 text-sm">No credit card required. Cancel anytime.</p>
+    </div>
+</section>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const accordions = document.querySelectorAll('.accordion-toggle');
-    const nestedAccordions = document.querySelectorAll('.nested-accordion-toggle');
+    const clearButton = document.getElementById('clear-btn');
 
     accordions.forEach(toggle => {
         toggle.addEventListener('click', function() {
@@ -197,45 +106,13 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    nestedAccordions.forEach(toggle => {
-        toggle.addEventListener('click', function() {
-            const target = this.dataset.target;
-            const content = document.getElementById(target);
-            const icon = this.querySelector('.accordion-icon');
-
-            content.classList.toggle('hidden');
-            icon.classList.toggle('rotate-180');
-        });
-    });
-});
-
-function clearForm() {
+    clearButton.addEventListener('click', function() {
         const inputs = document.querySelectorAll('input[type="number"]');
         inputs.forEach(input => {
             input.value = 0;
         });
         updateRealtimeTotal();
-
-        // Hide the estimate box
-        const estimateBox = document.getElementById('estimate-box');
-        if (estimateBox) {
-            estimateBox.classList.add('hidden');
-        }
-    }
-
-    const clearButton = document.getElementById('clear-btn');
-    clearButton.addEventListener('click', clearForm);
-
-function updateRealtimeTotal() {
-        let realtimeTotal = 0;
-        const inputs = document.querySelectorAll('input[type="number"]');
-        inputs.forEach(input => {
-            const price = parseFloat(input.parentElement.querySelector('span').textContent.slice(1));
-            const quantity = parseInt(input.value);
-            realtimeTotal += price * quantity;
-        });
-        document.getElementById('realtime-total').textContent = '$' + realtimeTotal.toFixed(2);
-    }
+    });
 
     const quantityInputs = document.querySelectorAll('input[type="number"]');
     quantityInputs.forEach(input => {
@@ -243,6 +120,19 @@ function updateRealtimeTotal() {
     });
 
     updateRealtimeTotal();
+});
 
+function updateRealtimeTotal() {
+    let realtimeTotal = 0;
+    const quantityInputs = document.querySelectorAll('input[type="number"]');
+    quantityInputs.forEach(input => {
+        const price = parseFloat(input.parentElement.querySelector('span').textContent.slice(1));
+        const quantity = parseInt(input.value);
+        realtimeTotal += price * quantity;
+    });
+    document.getElementById('realtime-total').textContent = '$' + realtimeTotal.toFixed(2);
+}
 </script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 {% endblock %}
