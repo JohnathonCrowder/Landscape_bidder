@@ -11,6 +11,11 @@ def index():
 def about():
     return render_template('about.html', title='About')
 
+# New route for the contact page
+@bp.route('/contact')
+def contact():
+    return render_template('contact.html', title='Contact Us')
+
 @bp.route('/bid-estimator', methods=['GET', 'POST'])
 def bid_estimator():
     if request.method == 'POST':
