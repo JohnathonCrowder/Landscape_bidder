@@ -3,9 +3,125 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<h1 class="text-4xl font-bold mb-4">Welcome to your Flask Azure App!</h1>
-<p class="text-lg mb-8">This is a basic homepage with a header using Tailwind CSS.</p>
-<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-    Get Started
-</button>
+<div class="bg-gradient-to-r from-green-400 to-blue-500 text-white py-20">
+    <div class="container mx-auto px-6 text-center">
+        <h1 class="text-5xl font-extrabold mb-4 leading-tight">BidScape: Precision Bidding for Landscape Pros</h1>
+        <p class="text-xl mb-8 max-w-2xl mx-auto">Transform your bidding process with data-driven accuracy. Win more jobs, optimize profits, and grow your landscape business.</p>
+        <a href="{{ url_for('main.bid_estimator') }}" class="bg-white text-green-600 hover:bg-green-100 font-bold py-3 px-8 rounded-full text-lg transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg inline-block">
+            Try BidScape Free
+        </a>
+        <p class="mt-4 text-sm">No credit card required. 14-day free trial.</p>
+    </div>
+</div>
+
+<section class="py-20 bg-gray-50">
+    <div class="container mx-auto px-6">
+        <h2 class="text-4xl font-bold text-center text-gray-800 mb-12">BidScape: Your Bidding Advantage</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
+                <svg class="w-12 h-12 text-green-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                </svg>
+                <h3 class="text-xl font-semibold mb-2">Real-time Estimates</h3>
+                <p class="text-gray-600">See your bid total update instantly as you select items and quantities. No more guesswork.</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
+                <svg class="w-12 h-12 text-green-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path>
+                </svg>
+                <h3 class="text-xl font-semibold mb-2">Pre-built Item Database</h3>
+                <p class="text-gray-600">Access a comprehensive list of landscape items with up-to-date market prices.</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
+                <svg class="w-12 h-12 text-green-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <h3 class="text-xl font-semibold mb-2">Time-Saver</h3>
+                <p class="text-gray-600">Create bids in minutes, not hours. Focus on your craft, not paperwork.</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
+                <svg class="w-12 h-12 text-green-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                </svg>
+                <h3 class="text-xl font-semibold mb-2">Accuracy Boost</h3>
+                <p class="text-gray-600">Reduce errors and overheads with precise, data-driven estimates.</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
+                <svg class="w-12 h-12 text-green-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                </svg>
+                <h3 class="text-xl font-semibold mb-2">Win More Bids</h3>
+                <p class="text-gray-600">Beat competitors with quick, professional, and competitive bids.</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
+                <svg class="w-12 h-12 text-green-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"></path>
+                </svg>
+                <h3 class="text-xl font-semibold mb-2">Equipment Costs Covered</h3>
+                <p class="text-gray-600">Factor in machinery costs effortlessly for more accurate bids.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-20 bg-white">
+    <div class="container mx-auto px-6">
+        <h2 class="text-4xl font-bold text-center text-gray-800 mb-12">How BidScape Works</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 items-start">
+            <div class="text-center">
+                <div class="bg-green-100 rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-6">
+                    <span class="text-3xl font-bold text-green-600">1</span>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Select Items</h3>
+                <p class="text-gray-600">Choose from our comprehensive list of landscape items, services, and equipment.</p>
+            </div>
+            <div class="text-center">
+                <div class="bg-green-100 rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-6">
+                    <span class="text-3xl font-bold text-green-600">2</span>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Set Quantities</h3>
+                <p class="text-gray-600">Enter the quantities needed for your project. Watch the total update in real-time.</p>
+            </div>
+            <div class="text-center">
+                <div class="bg-green-100 rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-6">
+                    <span class="text-3xl font-bold text-green-600">3</span>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Get Your Bid</h3>
+                <p class="text-gray-600">Generate a professional, itemized bid to present to your clients. Win the job!</p>
+            </div>
+        </div>
+        <div class="mt-16 text-center">
+            <a href="{{ url_for('main.bid_estimator') }}" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-12 rounded-full text-xl transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg inline-block">
+                Start Bidding Now
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="py-20 bg-gray-800 text-white text-center relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10">
+        <img src="https://images.unsplash.com/photo-1523301343968-6a6ebf63c672?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80" alt="Hardworking Landscaper" class="w-full h-full object-cover">
+    </div>
+    <div class="container mx-auto px-6 relative z-10">
+        <h2 class="text-4xl font-extrabold mb-6">"BidScape transformed my business."</h2>
+        <p class="text-xl mb-8 max-w-3xl mx-auto leading-relaxed">
+            "As a small landscaping business owner, I used to spend hours on bids, often underestimating costs. BidScape changed everything. Now, I create accurate bids in minutes, and my profits have never been better."
+        </p>
+        <p class="text-lg font-semibold">- John Greenthumb, Green Valley Landscaping</p>
+    </div>
+</section>
+
+<section class="py-20 bg-gray-100">
+    <div class="container mx-auto px-6 text-center">
+        <h2 class="text-4xl font-bold text-gray-800 mb-8">Ready to Grow Your Landscape Business?</h2>
+        <p class="text-xl text-gray-700 mb-12 max-w-3xl mx-auto">
+            Join hundreds of landscape professionals who've increased their win rates and profits with BidScape. Try it free for 14 days, no credit card required.
+        </p>
+        <a href="#" class="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-12 rounded-full text-2xl transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg inline-block">
+            Start Your Free Trial
+        </a>
+        <p class="mt-6 text-sm text-gray-600">Need more info? <a href="#" class="text-blue-500 hover:underline">Contact our sales team</a>.</p>
+    </div>
+</section>
 {% endblock %}
