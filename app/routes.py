@@ -1,10 +1,6 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, jsonify, session, redirect, url_for
 from app.data import LANDSCAPE_ITEMS
-from flask import redirect, url_for, session
-from app.custom_data import CUSTOM_LANDSCAPE_ITEMS, save_custom_data
-from app.custom_data import remove_custom_item
-from app.custom_data import reset_custom_data
-
+from app.custom_data import CUSTOM_LANDSCAPE_ITEMS, save_custom_data, remove_custom_item, reset_custom_data
 
 bp = Blueprint('main', __name__)
 
@@ -16,7 +12,6 @@ def index():
 def about():
     return render_template('about.html', title='About')
 
-# New route for the contact page
 @bp.route('/contact')
 def contact():
     return render_template('contact.html', title='Contact Us')
@@ -56,8 +51,7 @@ def bid_estimator():
             for item in items:
                 quantity = int(request.form.get(f"{category}_{item['name']}", 0))
                 total_cost += item['price'] * quantity
-
-        return render_template('bid_estimator.html', title='Bid Estimator', landscape_items=LANDSCAPE_ITEMS, total_cost=total_cost)
+        return jsonify({'total_cost': total_cost})
     
     return render_template('bid_estimator.html', title='Bid Estimator', landscape_items=LANDSCAPE_ITEMS, total_cost=0)
 
@@ -69,8 +63,7 @@ def custom_bidder():
             for item in items:
                 quantity = int(request.form.get(f"{category}_{item['name']}", 0))
                 total_cost += item['price'] * quantity
-
-        return render_template('custom_bidder.html', title='Custom Bidder', landscape_items=CUSTOM_LANDSCAPE_ITEMS, total_cost=total_cost)
+        return jsonify({'total_cost': total_cost})
     
     return render_template('custom_bidder.html', title='Custom Bidder', landscape_items=CUSTOM_LANDSCAPE_ITEMS, total_cost=0)
 

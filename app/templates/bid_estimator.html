@@ -17,7 +17,7 @@
 
 <section class="py-20 bg-white">
     <div class="container mx-auto px-6">
-        <form method="POST" action="{{ url_for('main.bid_estimator') }}" class="space-y-12">
+        <form id="estimate-form" class="space-y-12">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 {% for category, items in landscape_items.items() %}
                 <div class="bg-gray-50 rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out">
@@ -41,7 +41,7 @@
             </div>
 
             <div class="flex justify-center space-x-6">
-                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-12 rounded-full text-xl transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                <button type="button" id="generate-estimate-btn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-12 rounded-full text-xl transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
                     Generate Estimate
                 </button>
                 <button type="button" id="clear-btn" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-4 px-12 rounded-full text-xl transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
@@ -52,8 +52,7 @@
     </div>
 </section>
 
-{% if total_cost > 0 %}
-<section class="py-20 bg-gray-50">
+<section id="estimate-section" class="py-20 bg-gray-50 hidden">
     <div class="container mx-auto px-6">
         <div id="estimate-box" class="bg-white rounded-xl shadow-2xl p-12 max-w-4xl mx-auto animate__animated animate__fadeIn">
             <div class="flex items-center justify-center mb-8">
@@ -62,7 +61,7 @@
                 </svg>
                 <h3 class="text-4xl font-extrabold text-gray-800">Your Estimate is Ready!</h3>
             </div>
-            <p class="text-5xl font-extrabold text-green-600 mb-8 text-center">${{ total_cost }}</p>
+            <p id="estimate-total" class="text-5xl font-extrabold text-green-600 mb-8 text-center"></p>
             <p class="text-gray-700 text-lg leading-relaxed mb-8">This estimate is based on the items and quantities you selected. Keep in mind that actual costs may vary depending on project specifics, site conditions, and local market factors. We recommend a site visit for a more precise quote.</p>
             <div class="flex justify-center space-x-4">
                 <a href="#" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
@@ -75,7 +74,6 @@
         </div>
     </div>
 </section>
-{% endif %}
 
 <section class="py-20 bg-blue-600 text-white text-center">
     <div class="container mx-auto px-6">
@@ -94,6 +92,8 @@
 document.addEventListener('DOMContentLoaded', function() {
     const accordions = document.querySelectorAll('.accordion-toggle');
     const clearButton = document.getElementById('clear-btn');
+    const generateEstimateBtn = document.getElementById('generate-estimate-btn');
+    const estimateForm = document.getElementById('estimate-form');
 
     accordions.forEach(toggle => {
         toggle.addEventListener('click', function() {
@@ -112,6 +112,24 @@ document.addEventListener('DOMContentLoaded', function() {
             input.value = 0;
         });
         updateRealtimeTotal();
+        document.getElementById('estimate-section').classList.add('hidden');
+    });
+
+    generateEstimateBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const formData = new FormData(estimateForm);
+        
+        fetch('{{ url_for('main.bid_estimator') }}', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('realtime-total').textContent = '$' + data.total_cost.toFixed(2);
+            document.getElementById('estimate-total').textContent = '$' + data.total_cost.toFixed(2);
+            document.getElementById('estimate-section').classList.remove('hidden');
+        })
+        .catch(error => console.error('Error:', error));
     });
 
     const quantityInputs = document.querySelectorAll('input[type="number"]');
