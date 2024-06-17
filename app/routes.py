@@ -2,6 +2,15 @@ from flask import Blueprint, render_template, request, jsonify, session, redirec
 from app.data import LANDSCAPE_ITEMS
 from app.custom_data import CUSTOM_LANDSCAPE_ITEMS, save_custom_data, remove_custom_item, reset_custom_data
 
+import json
+from flask import jsonify
+
+from io import BytesIO
+from flask import make_response
+from reportlab.lib import colors
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
+
 bp = Blueprint('main', __name__)
 
 @bp.route('/')
@@ -47,13 +56,69 @@ def forgot_password():
 def bid_estimator():
     if request.method == 'POST':
         total_cost = 0
+        items_data = []
+
         for category, items in LANDSCAPE_ITEMS.items():
             for item in items:
-                quantity = int(request.form.get(f"{category}_{item['name']}", 0))
-                total_cost += item['price'] * quantity
+                quantity = request.form.get(f"{category}_{item['name']}", 0)
+                if quantity:
+                    item_cost = item['price'] * int(quantity)
+                    total_cost += item_cost
+                    items_data.append([item['name'], int(quantity), item['price'], item_cost])
+
+        if 'download_pdf' in request.form:
+            # Create a BytesIO object to store the PDF data
+            pdf_buffer = BytesIO()
+
+            # Create a SimpleDocTemplate object with the BytesIO buffer
+            doc = SimpleDocTemplate(pdf_buffer, pagesize=letter)
+
+            # Create a Table object with the selected items and their costs
+            table_data = [['Item', 'Quantity', 'Price', 'Cost']] + items_data
+            table = Table(table_data)
+            table.setStyle(TableStyle([
+                ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+                ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+                ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                ('FONTSIZE', (0, 0), (-1, 0), 14),
+                ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+                ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+                ('TEXTCOLOR', (0, 1), (-1, -1), colors.black),
+                ('ALIGN', (0, 1), (-1, -1), 'CENTER'),
+                ('FONTNAME', (0, 1), (-1, -1), 'Helvetica'),
+                ('FONTSIZE', (0, 1), (-1, -1), 12),
+                ('TOPPADDING', (0, 1), (-1, -1), 6),
+                ('BOTTOMPADDING', (0, 1), (-1, -1), 6),
+            ]))
+
+            # Add the total cost row
+            total_cost_row = ['Total Cost', '', '', f'${total_cost:.2f}']
+            total_cost_table = Table([total_cost_row])
+            total_cost_table.setStyle(TableStyle([
+                ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+                ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+                ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                ('FONTSIZE', (0, 0), (-1, 0), 14),
+                ('TOPPADDING', (0, 0), (-1, 0), 12),
+                ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+            ]))
+
+            # Build the PDF document
+            elements = [table, total_cost_table]
+            doc.build(elements)
+
+            # Create a response with the PDF data
+            response = make_response(pdf_buffer.getvalue())
+            response.headers['Content-Type'] = 'application/pdf'
+            response.headers['Content-Disposition'] = 'inline; filename=bid_estimate.pdf'
+
+            return response
+
         return jsonify({'total_cost': total_cost})
-    
-    return render_template('bid_estimator.html', title='Bid Estimator', landscape_items=LANDSCAPE_ITEMS, total_cost=0)
+
+    return render_template('bid_estimator.html', items=LANDSCAPE_ITEMS)
 
 @bp.route('/custom-bidder', methods=['GET', 'POST'])
 def custom_bidder():
