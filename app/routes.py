@@ -13,7 +13,7 @@ from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import inch
-from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer, Image
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer, Image, HRFlowable
 from app.data import LANDSCAPE_ITEMS
 
 
@@ -96,44 +96,46 @@ def bid_estimator():
             title_style = ParagraphStyle(
                 name='TitleStyle',
                 parent=styles['Heading1'],
-                fontSize=24,
-                textColor=colors.darkgreen,
+                fontSize=28,
+                textColor=colors.HexColor('#2f855a'),  # Dark green
                 alignment=1,
-                spaceAfter=0.3 * inch
+                spaceAfter=0.5 * inch
             )
             subtitle_style = ParagraphStyle(
                 name='SubtitleStyle',
                 parent=styles['Heading2'],
-                fontSize=16,
-                textColor=colors.darkblue,
+                fontSize=18,
+                textColor=colors.HexColor('#2c5282'),  # Dark blue
                 alignment=1,
-                spaceAfter=0.2 * inch
+                spaceAfter=0.3 * inch
             )
             table_header_style = ParagraphStyle(
                 name='TableHeaderStyle',
                 parent=styles['Normal'],
-                fontSize=14,
+                fontSize=12,
                 textColor=colors.white,
-                alignment=1
+                alignment=1,
+                fontName='Helvetica-Bold'
             )
             table_cell_style = ParagraphStyle(
                 name='TableCellStyle',
                 parent=styles['Normal'],
-                fontSize=12,
-                textColor=colors.black
+                fontSize=11,
+                textColor=colors.black,
+                fontName='Helvetica'
             )
             total_cost_style = ParagraphStyle(
                 name='TotalCostStyle',
                 parent=styles['Normal'],
-                fontSize=16,
-                textColor=colors.darkgreen,
+                fontSize=18,
+                textColor=colors.HexColor('#2f855a'),  # Dark green
                 alignment=2,
-                spaceAfter=0.3 * inch
+                spaceAfter=0.5 * inch
             )
             thank_you_style = ParagraphStyle(
                 name='ThankYouStyle',
                 parent=styles['Normal'],
-                fontSize=14,
+                fontSize=12,
                 textColor=colors.black,
                 alignment=1
             )
@@ -144,11 +146,21 @@ def bid_estimator():
             # Add the company logo
             logo_path = r"C:\Users\Admin\Pictures\txt\vecteezy_heart_1187381.png"
             logo = Image(logo_path, width=2 * inch, height=1 * inch)
-            logo.hAlign = 'LEFT'
-            elements.append(logo)
+            logo.hAlign = 'CENTER'  # Center the logo horizontally
+            logo_table = Table([[logo]], colWidths=[doc.width])  # Create a table with the logo centered
+            logo_table.setStyle(TableStyle([
+                ('ALIGN', (0, 0), (-1, -1), 'CENTER'),  # Center the logo within the table
+                ('TOPPADDING', (0, 0), (-1, -1), 0.5 * inch),  # Add top padding to the table
+                ('BOTTOMPADDING', (0, 0), (-1, -1), 0.5 * inch),  # Add bottom padding to the table
+            ]))
+            elements.append(logo_table)
 
             # Add the title
+            elements.append(Spacer(1, 0.2 * inch))
             elements.append(Paragraph('Landscape Bid Estimate', title_style))
+
+            # Add a horizontal rule
+            elements.append(HRFlowable(width='100%', color=colors.HexColor('#2f855a'), thickness=2, spaceAfter=0.3 * inch))
 
             # Add the subtitle
             elements.append(Paragraph('Selected Items', subtitle_style))
@@ -166,20 +178,21 @@ def bid_estimator():
 
             table = Table(table_data)
             table.setStyle(TableStyle([
-                ('BACKGROUND', (0, 0), (-1, 0), colors.darkgreen),
+                ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#2f855a')),  # Header background color (dark green)
                 ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
                 ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
                 ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-                ('FONTSIZE', (0, 0), (-1, 0), 14),
-                ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
-                ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+                ('FONTSIZE', (0, 0), (-1, 0), 12),
+                ('BOTTOMPADDING', (0, 0), (-1, 0), 8),
+                ('TOPPADDING', (0, 0), (-1, 0), 8),
+                ('BACKGROUND', (0, 1), (-1, -1), colors.HexColor('#f0fff4')),  # Cell background color (light green)
                 ('TEXTCOLOR', (0, 1), (-1, -1), colors.black),
                 ('ALIGN', (0, 1), (-1, -1), 'CENTER'),
                 ('FONTNAME', (0, 1), (-1, -1), 'Helvetica'),
-                ('FONTSIZE', (0, 1), (-1, -1), 12),
-                ('TOPPADDING', (0, 1), (-1, -1), 6),
-                ('BOTTOMPADDING', (0, 1), (-1, -1), 6),
-                ('GRID', (0, 0), (-1, -1), 1, colors.black)
+                ('FONTSIZE', (0, 1), (-1, -1), 11),
+                ('TOPPADDING', (0, 1), (-1, -1), 4),
+                ('BOTTOMPADDING', (0, 1), (-1, -1), 4),
+                ('GRID', (0, 0), (-1, -1), 1, colors.HexColor('#2f855a'))  # Grid color (dark green)
             ]))
             elements.append(table)
 
@@ -190,8 +203,8 @@ def bid_estimator():
             total_cost_text = f'Total Estimated Cost: ${total_cost:.2f}'
             elements.append(Paragraph(total_cost_text, total_cost_style))
 
-            # Add a spacer
-            elements.append(Spacer(1, 0.2 * inch))
+            # Add a horizontal rule
+            elements.append(HRFlowable(width='100%', color=colors.HexColor('#2f855a'), thickness=1, spaceAfter=0.2 * inch))
 
             # Add a thank you paragraph
             thank_you_text = "Thank you for considering our services. We look forward to working with you on your landscape project. If you have any questions or would like to proceed with the estimate, please feel free to contact us."
