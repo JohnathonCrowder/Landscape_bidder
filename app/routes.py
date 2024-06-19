@@ -249,6 +249,7 @@ def bid_estimator():
 
 @bp.route('/custom-bidder', methods=['GET', 'POST'])
 def custom_bidder():
+    global CUSTOM_LANDSCAPE_ITEMS
     if request.method == 'POST':
         total_cost = 0
         for category, items in CUSTOM_LANDSCAPE_ITEMS.items():
@@ -261,6 +262,7 @@ def custom_bidder():
 
 @bp.route('/add-custom-item', methods=['POST'])
 def add_custom_item():
+    global CUSTOM_LANDSCAPE_ITEMS
     category = request.form.get('category')
     name = request.form.get('name')
     price = float(request.form.get('price'))
@@ -275,7 +277,8 @@ def add_custom_item():
 
 @bp.route('/reset-custom-data')
 def reset_custom_data_route():
-    reset_custom_data()
+    global CUSTOM_LANDSCAPE_ITEMS
+    CUSTOM_LANDSCAPE_ITEMS = reset_custom_data()
     return redirect(url_for('main.custom_bidder'))
 
 @bp.route('/remove-custom-item/<category>/<item_name>')

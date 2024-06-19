@@ -11,7 +11,7 @@ def load_custom_data():
     else:
         # If the file doesn't exist, create it with the default data
         save_custom_data(LANDSCAPE_ITEMS)
-        return LANDSCAPE_ITEMS
+        return LANDSCAPE_ITEMS.copy()
 
 def save_custom_data(data):
     with open(CUSTOM_DATA_FILE, 'w') as f:
@@ -21,8 +21,10 @@ def reset_custom_data():
     global CUSTOM_LANDSCAPE_ITEMS
     CUSTOM_LANDSCAPE_ITEMS = LANDSCAPE_ITEMS.copy()
     save_custom_data(CUSTOM_LANDSCAPE_ITEMS)
+    return CUSTOM_LANDSCAPE_ITEMS
 
 def remove_custom_item(category, item_name):
+    global CUSTOM_LANDSCAPE_ITEMS
     if category in CUSTOM_LANDSCAPE_ITEMS:
         CUSTOM_LANDSCAPE_ITEMS[category] = [item for item in CUSTOM_LANDSCAPE_ITEMS[category] if item['name'] != item_name]
         if not CUSTOM_LANDSCAPE_ITEMS[category]:
