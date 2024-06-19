@@ -23,6 +23,15 @@ def reset_custom_data():
     save_custom_data(CUSTOM_LANDSCAPE_ITEMS)
     return CUSTOM_LANDSCAPE_ITEMS
 
+def update_item_price(category, item_name, new_price):
+    global CUSTOM_LANDSCAPE_ITEMS
+    if category in CUSTOM_LANDSCAPE_ITEMS:
+        for item in CUSTOM_LANDSCAPE_ITEMS[category]:
+            if item['name'] == item_name:
+                item['price'] = new_price
+                break
+    save_custom_data(CUSTOM_LANDSCAPE_ITEMS)
+
 def remove_custom_item(category, item_name):
     global CUSTOM_LANDSCAPE_ITEMS
     if category in CUSTOM_LANDSCAPE_ITEMS:

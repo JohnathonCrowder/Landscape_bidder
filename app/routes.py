@@ -1,10 +1,11 @@
 from flask import Blueprint, render_template, request, jsonify, session, redirect, url_for
 from app.data import LANDSCAPE_ITEMS
-from app.custom_data import CUSTOM_LANDSCAPE_ITEMS, save_custom_data, remove_custom_item, reset_custom_data
+from app.custom_data import CUSTOM_LANDSCAPE_ITEMS, save_custom_data, remove_custom_item, reset_custom_data, update_item_price
 
 import json
 from flask import jsonify
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+
 
 
 from io import BytesIO
@@ -249,7 +250,6 @@ def bid_estimator():
 
 @bp.route('/custom-bidder', methods=['GET', 'POST'])
 def custom_bidder():
-    global CUSTOM_LANDSCAPE_ITEMS
     if request.method == 'POST':
         total_cost = 0
         for category, items in CUSTOM_LANDSCAPE_ITEMS.items():
@@ -258,7 +258,16 @@ def custom_bidder():
                 total_cost += item['price'] * quantity
         return jsonify({'total_cost': total_cost})
     
-    return render_template('custom_bidder.html', title='Custom Bidder', landscape_items=CUSTOM_LANDSCAPE_ITEMS, total_cost=0)
+    return render_template('custom_bidder.html', title='Custom Bidder', landscape_items=CUSTOM_LANDSCAPE_ITEMS)
+
+@bp.route('/update-item-price', methods=['POST'])
+def update_item_price_route():
+    category = request.form.get('category')
+    item_name = request.form.get('item_name')
+    new_price = float(request.form.get('new_price'))
+    
+    update_item_price(category, item_name, new_price)
+    return jsonify({'success': True})
 
 @bp.route('/add-custom-item', methods=['POST'])
 def add_custom_item():

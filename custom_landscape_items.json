@@ -2,7 +2,7 @@
     "trees": [
         {
             "name": "Oak Tree (30 gal)",
-            "price": 450
+            "price": 450000.0
         },
         {
             "name": "Maple Tree (15 gal)",
