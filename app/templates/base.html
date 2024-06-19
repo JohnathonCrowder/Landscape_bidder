@@ -24,11 +24,12 @@
                     <a href="{{ url_for('main.bid_estimator') }}" class="text-lg font-medium hover:text-blue-100 transition duration-300 ease-in-out">Bid Estimator</a>
                     <a href="{{ url_for('main.contact') }}" class="text-lg font-medium hover:text-blue-100 transition duration-300 ease-in-out">Contact</a>
                     {% if current_user.is_authenticated %}
-                    <a href="{{ url_for('main.account') }}" class="text-lg font-medium hover:text-blue-100 transition duration-300 ease-in-out">Account</a>
-                    <a href="{{ url_for('main.logout') }}">Logout</a>
+                        <a href="{{ url_for('main.custom_bidder') }}" class="text-lg font-medium hover:text-blue-100 transition duration-300 ease-in-out">Custom Bidder</a>
+                        <a href="{{ url_for('main.account') }}" class="text-lg font-medium hover:text-blue-100 transition duration-300 ease-in-out">Account</a>
+                        <a href="{{ url_for('main.logout') }}" class="text-lg font-medium hover:text-blue-100 transition duration-300 ease-in-out">Logout</a>
                     {% else %}
-                    <a href="{{ url_for('main.login') }}">Login</a>
-                    <a href="{{ url_for('main.signup') }}">Sign Up</a>
+                        <a href="{{ url_for('main.login') }}" class="text-lg font-medium hover:text-blue-100 transition duration-300 ease-in-out">Login</a>
+                        <a href="{{ url_for('main.signup') }}" class="text-lg font-medium hover:text-blue-100 transition duration-300 ease-in-out">Sign Up</a>
                     {% endif %}
                 </div>
                 <div class="md:hidden">
@@ -45,12 +46,14 @@
                     <a href="{{ url_for('main.about') }}" class="text-lg font-medium hover:text-blue-100 transition duration-300 ease-in-out">About</a>
                     <a href="{{ url_for('main.bid_estimator') }}" class="text-lg font-medium hover:text-blue-100 transition duration-300 ease-in-out">Bid Estimator</a>
                     <a href="{{ url_for('main.contact') }}" class="text-lg font-medium hover:text-blue-100 transition duration-300 ease-in-out">Contact</a>
-                    <a href="{{ url_for('main.login') }}" class="bg-white text-blue-500 hover:bg-blue-100 font-bold py-2 px-6 rounded-full transition duration-300 ease-in-out shadow-md hover:shadow-lg transform hover:scale-105 text-center">
-                        Log In
-                    </a>
-                    <a href="{{ url_for('main.signup') }}" class="bg-green-500 text-white hover:bg-green-600 font-bold py-2 px-6 rounded-full transition duration-300 ease-in-out shadow-md hover:shadow-lg transform hover:scale-105 text-center">
-                        Sign Up
-                    </a>
+                    {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('main.custom_bidder') }}" class="text-lg font-medium hover:text-blue-100 transition duration-300 ease-in-out">Custom Bidder</a>
+                        <a href="{{ url_for('main.account') }}" class="text-lg font-medium hover:text-blue-100 transition duration-300 ease-in-out">Account</a>
+                        <a href="{{ url_for('main.logout') }}" class="text-lg font-medium hover:text-blue-100 transition duration-300 ease-in-out">Logout</a>
+                    {% else %}
+                        <a href="{{ url_for('main.login') }}" class="text-lg font-medium hover:text-blue-100 transition duration-300 ease-in-out">Login</a>
+                        <a href="{{ url_for('main.signup') }}" class="text-lg font-medium hover:text-blue-100 transition duration-300 ease-in-out">Sign Up</a>
+                    {% endif %}
                 </div>
             </div>
         </div>

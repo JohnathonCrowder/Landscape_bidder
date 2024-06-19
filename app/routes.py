@@ -73,9 +73,12 @@ def generate_pdf(items_data, total_cost, is_custom=False):
 
     elements = []
 
-    # Add the company logo
-    logo_path = r"C:\Users\Admin\Pictures\txt\vecteezy_heart_1187381.png"
-    logo = Image(logo_path, width=2 * inch, height=1 * inch)
+    # Add the logo
+    if current_user.is_authenticated and current_user.logo:
+        logo = Image(BytesIO(current_user.logo), width=2*inch, height=1*inch)
+    else:
+        logo_path = r"C:\Users\Admin\Pictures\txt\vecteezy_heart_1187381.png"
+        logo = Image(logo_path, width=2*inch, height=1*inch)
     logo.hAlign = 'CENTER'
     logo_table = Table([[logo]], colWidths=[doc.width])
     logo_table.setStyle(TableStyle([
@@ -91,6 +94,10 @@ def generate_pdf(items_data, total_cost, is_custom=False):
         elements.append(Paragraph('Custom Landscape Bid Estimate', title_style))
     else:
         elements.append(Paragraph('Landscape Bid Estimate', title_style))
+
+    # Add company name if available
+    if current_user.is_authenticated and current_user.company_name:
+        elements.append(Paragraph(current_user.company_name, subtitle_style))
 
     elements.append(HRFlowable(width='100%', color=colors.HexColor('#2f855a'), thickness=2, spaceAfter=0.3 * inch))
     elements.append(Paragraph('Selected Items', subtitle_style))
@@ -219,6 +226,15 @@ def bid_estimator():
         return jsonify({'total_cost': total_cost})
 
     return render_template('bid_estimator.html', items=LANDSCAPE_ITEMS)
+
+@bp.route('/update_company_name', methods=['POST'])
+@login_required
+def update_company_name():
+    new_company_name = request.form.get('company_name', '').strip()
+    current_user.company_name = new_company_name or None  # Set to None if empty
+    db.session.commit()
+    flash('Company name updated successfully')
+    return redirect(url_for('main.account'))
 
 @bp.route('/custom-bidder', methods=['GET', 'POST'])
 def custom_bidder():
