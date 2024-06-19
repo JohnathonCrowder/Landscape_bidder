@@ -11,6 +11,12 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import inch
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer, Image, HRFlowable
 
+from flask import send_file
+from io import BytesIO
+from werkzeug.utils import secure_filename
+
+from flask import Blueprint, render_template, request, jsonify, session, redirect, url_for, make_response, flash, abort, send_file
+
 bp = Blueprint('main', __name__)
 
 def generate_pdf(items_data, total_cost, is_custom=False):
@@ -278,3 +284,40 @@ def reset_custom_data_route():
 def remove_custom_item_route(category, item_name):
     remove_custom_item(category, item_name)
     return redirect(url_for('main.custom_bidder'))
+
+@bp.route('/upload_logo', methods=['POST'])
+@login_required
+def upload_logo():
+    if 'logo' not in request.files:
+        flash('No file part')
+        return redirect(url_for('main.account'))
+    file = request.files['logo']
+    if file.filename == '':
+        flash('No selected file')
+        return redirect(url_for('main.account'))
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        current_user.logo = file.read()
+        current_user.logo_mimetype = file.mimetype
+        db.session.commit()
+        flash('Logo uploaded successfully')
+    else:
+        flash('Invalid file type')
+    return redirect(url_for('main.account'))
+
+@bp.route('/get_logo/<int:user_id>')
+def get_logo(user_id):
+    user = User.query.get_or_404(user_id)
+    if user.logo:
+        return send_file(
+            BytesIO(user.logo),
+            mimetype=user.logo_mimetype,
+            as_attachment=False
+        )
+    else:
+        abort(404)
+
+def allowed_file(filename):
+    ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS

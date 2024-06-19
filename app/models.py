@@ -7,6 +7,8 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     company_name = db.Column(db.String(120), nullable=True)
     password_hash = db.Column(db.String(128))
+    logo = db.Column(db.LargeBinary, nullable=True)
+    logo_mimetype = db.Column(db.String(64), nullable=True)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
