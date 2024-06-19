@@ -247,6 +247,11 @@ def update_item_price_route():
     update_item_price(category, item_name, new_price)
     return jsonify({'success': True})
 
+@bp.route('/account')
+@login_required
+def account():
+    return render_template('account.html')
+
 @bp.route('/add-custom-item', methods=['POST'])
 def add_custom_item():
     global CUSTOM_LANDSCAPE_ITEMS

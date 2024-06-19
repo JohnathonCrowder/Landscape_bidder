@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Account{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-6 py-12">
+    <h1 class="text-4xl font-bold text-gray-800 mb-6">Account Information</h1>
+
+    {% if current_user.is_authenticated %}
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <p class="text-lg text-gray-700 mb-2">Username: {{ current_user.username }}</p>
+        <!-- Add any other user information you want to display here -->
+    </div>
+    {% else %}
+    <p>You are not logged in.</p>
+    {% endif %}
+</div>
+{% endblock %}
