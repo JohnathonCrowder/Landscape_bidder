@@ -16,6 +16,13 @@ from reportlab.lib.units import inch
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer, Image, HRFlowable
 from app.data import LANDSCAPE_ITEMS
 
+from flask import render_template, redirect, url_for, flash, request
+from flask_login import login_user, login_required, logout_user, current_user
+from app import db
+from app.models import User
+#from . import bp
+from .data import LANDSCAPE_ITEMS
+
 
 from io import BytesIO
 from flask import make_response
@@ -39,26 +46,42 @@ def contact():
 
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.index'))
     if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
-        
-        if username == 'admin' and password == 'admin':
-            session['logged_in'] = True
+        username = request.form['username']
+        password = request.form['password']
+        user = User.query.filter_by(username=username).first()
+        if user and user.check_password(password):
+            login_user(user)
             return redirect(url_for('main.index'))
         else:
-            return render_template('login.html', title='Login', error='Invalid credentials')
-    
-    return render_template('login.html', title='Login')
+            flash('Invalid username or password')
+    return render_template('login.html')
 
 @bp.route('/logout')
+@login_required
 def logout():
-    session.pop('logged_in', None)
+    logout_user()
     return redirect(url_for('main.index'))
 
-@bp.route('/signup')
+@bp.route('/signup', methods=['GET', 'POST'])
 def signup():
-    return render_template('signup.html', title='Sign Up')
+    if current_user.is_authenticated:
+        return redirect(url_for('main.index'))
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        if User.query.filter_by(username=username).first():
+            flash('Username already exists')
+        else:
+            user = User(username=username)
+            user.set_password(password)
+            db.session.add(user)
+            db.session.commit()
+            login_user(user)
+            return redirect(url_for('main.index'))
+    return render_template('signup.html')
 
 @bp.route('/forgot-password')
 def forgot_password():

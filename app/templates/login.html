@@ -10,11 +10,15 @@
                 <h2 class="text-3xl font-extrabold text-gray-800 mb-6">Welcome Back!</h2>
                 <p class="text-gray-600 mb-8">Log in to your account to access your bids and profile.</p>
                 <form action="{{ url_for('main.login') }}" method="POST">
-                    {% if error %}
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
                     <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
-                        <span class="block sm:inline">{{ error }}</span>
+                        {% for message in messages %}
+                        <span class="block sm:inline">{{ message }}</span>
+                        {% endfor %}
                     </div>
                     {% endif %}
+                    {% endwith %}
                     <div class="mb-6">
                         <label for="username" class="block text-gray-700 font-semibold mb-2">Username</label>
                         <input type="text" id="username" name="username" class="w-full px-4 py-3 rounded-lg shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300" placeholder="Enter your username" required>
