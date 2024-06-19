@@ -252,10 +252,108 @@ def bid_estimator():
 def custom_bidder():
     if request.method == 'POST':
         total_cost = 0
+        items_data = []
+
         for category, items in CUSTOM_LANDSCAPE_ITEMS.items():
             for item in items:
                 quantity = int(request.form.get(f"{category}_{item['name']}", 0))
-                total_cost += item['price'] * quantity
+                if quantity > 0:
+                    item_cost = item['price'] * quantity
+                    total_cost += item_cost
+                    items_data.append([item['name'], quantity, item['price'], item_cost])
+
+        if 'download_pdf' in request.form:
+            pdf_buffer = BytesIO()
+            doc = SimpleDocTemplate(pdf_buffer, pagesize=letter, rightMargin=inch, leftMargin=inch, topMargin=inch, bottomMargin=inch)
+
+            styles = getSampleStyleSheet()
+            title_style = ParagraphStyle(
+                name='TitleStyle',
+                parent=styles['Heading1'],
+                fontSize=28,
+                textColor=colors.HexColor('#2f855a'),
+                alignment=1,
+                spaceAfter=0.5 * inch
+            )
+            subtitle_style = ParagraphStyle(
+                name='SubtitleStyle',
+                parent=styles['Heading2'],
+                fontSize=18,
+                textColor=colors.HexColor('#2c5282'),
+                alignment=1,
+                spaceAfter=0.3 * inch
+            )
+            table_header_style = ParagraphStyle(
+                name='TableHeaderStyle',
+                parent=styles['Normal'],
+                fontSize=12,
+                textColor=colors.white,
+                alignment=1,
+                fontName='Helvetica-Bold'
+            )
+            table_cell_style = ParagraphStyle(
+                name='TableCellStyle',
+                parent=styles['Normal'],
+                fontSize=11,
+                textColor=colors.black,
+                fontName='Helvetica'
+            )
+            total_cost_style = ParagraphStyle(
+                name='TotalCostStyle',
+                parent=styles['Normal'],
+                fontSize=18,
+                textColor=colors.HexColor('#2f855a'),
+                alignment=2,
+                spaceAfter=0.5 * inch
+            )
+
+            elements = []
+
+            elements.append(Paragraph('Custom Landscape Bid Estimate', title_style))
+            elements.append(HRFlowable(width='100%', color=colors.HexColor('#2f855a'), thickness=2, spaceAfter=0.3 * inch))
+            elements.append(Paragraph('Selected Items', subtitle_style))
+
+            table_data = [['Item', 'Quantity', 'Price', 'Cost']]
+            for item in items_data:
+                row = [
+                    Paragraph(str(item[0]), table_cell_style),
+                    Paragraph(str(item[1]), table_cell_style),
+                    Paragraph(f'${item[2]:.2f}', table_cell_style),
+                    Paragraph(f'${item[3]:.2f}', table_cell_style)
+                ]
+                table_data.append(row)
+
+            table = Table(table_data)
+            table.setStyle(TableStyle([
+                ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#2f855a')),
+                ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+                ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                ('FONTSIZE', (0, 0), (-1, 0), 12),
+                ('BOTTOMPADDING', (0, 0), (-1, 0), 8),
+                ('BACKGROUND', (0, 1), (-1, -1), colors.HexColor('#f0fff4')),
+                ('TEXTCOLOR', (0, 1), (-1, -1), colors.black),
+                ('ALIGN', (0, 1), (-1, -1), 'CENTER'),
+                ('FONTNAME', (0, 1), (-1, -1), 'Helvetica'),
+                ('FONTSIZE', (0, 1), (-1, -1), 11),
+                ('TOPPADDING', (0, 1), (-1, -1), 4),
+                ('BOTTOMPADDING', (0, 1), (-1, -1), 4),
+                ('GRID', (0, 0), (-1, -1), 1, colors.HexColor('#2f855a'))
+            ]))
+            elements.append(table)
+
+            elements.append(Spacer(1, 0.3 * inch))
+            elements.append(Paragraph(f'Total Estimated Cost: ${total_cost:.2f}', total_cost_style))
+
+            doc.build(elements)
+
+            pdf_buffer.seek(0)
+            response = make_response(pdf_buffer.getvalue())
+            response.headers['Content-Type'] = 'application/pdf'
+            response.headers['Content-Disposition'] = 'inline; filename=custom_bid_estimate.pdf'
+
+            return response
+
         return jsonify({'total_cost': total_cost})
     
     return render_template('custom_bidder.html', title='Custom Bidder', landscape_items=CUSTOM_LANDSCAPE_ITEMS)
