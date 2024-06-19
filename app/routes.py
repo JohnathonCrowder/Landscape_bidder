@@ -176,6 +176,16 @@ def logout():
     logout_user()
     return redirect(url_for('main.index'))
 
+@bp.route('/delete_account', methods=['POST'])
+@login_required
+def delete_account():
+    user = User.query.get(current_user.id)
+    db.session.delete(user)
+    db.session.commit()
+    logout_user()
+    flash('Your account has been successfully deleted.')
+    return redirect(url_for('main.index'))
+
 @bp.route('/signup', methods=['GET', 'POST'])
 def signup():
     if current_user.is_authenticated:
