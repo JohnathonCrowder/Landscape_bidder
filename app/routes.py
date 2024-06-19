@@ -147,6 +147,10 @@ def generate_pdf(items_data, total_cost, is_custom=False):
 def index():
     return render_template('index.html', title='Home')
 
+@bp.route('/subscribe')
+def subscribe():
+    return render_template('subscribe.html', title='Subscribe')
+
 @bp.route('/about')
 def about():
     return render_template('about.html', title='About')
