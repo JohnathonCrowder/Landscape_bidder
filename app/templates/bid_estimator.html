@@ -16,7 +16,6 @@
 </div>
 
 <section class="py-20 bg-white">
-    
     <div class="container mx-auto px-6">
         <div class="mb-6">
             <input type="text" id="item-search" placeholder="Search items..." class="w-full px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:border-blue-500">
@@ -24,23 +23,55 @@
         <form id="estimate-form" class="space-y-12">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 {% for category, items in items.items() %}
-                <div class="bg-gray-50 rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out">
-                    <button type="button" class="accordion-toggle w-full py-6 px-8 bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold text-left flex items-center justify-between transition-all duration-300" data-target="accordion-{{ category }}">
-                        <span class="text-xl capitalize">{{ category.replace('_', ' ') }}</span>
-                        <svg class="w-6 h-6 transform transition-transform duration-300 accordion-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                        </svg>
-                    </button>
-                    <div id="accordion-{{ category }}" class="accordion-content px-8 py-6 hidden">
-                        {% for item in items %}
-                        <div class="flex items-center justify-between mb-6 last:mb-0">
-                            <label for="{{ category }}_{{ item.name }}" class="text-lg text-gray-700 flex-grow pr-4">{{ item.name }}</label>
-                            <span class="text-lg font-semibold text-green-600 mr-4">${{ item.price }}</span>
-                            <input type="number" id="{{ category }}_{{ item.name }}" name="{{ category }}_{{ item.name }}" min="0" value="0" class="w-24 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    {% if category == 'plumbing_supplies' %}
+                        <div class="bg-gray-50 rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out">
+                            <button type="button" class="accordion-toggle w-full py-6 px-8 bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold text-left flex items-center justify-between transition-all duration-300" data-target="accordion-{{ category }}">
+                                <span class="text-xl capitalize">{{ category.replace('_', ' ') }}</span>
+                                <svg class="w-6 h-6 transform transition-transform duration-300 accordion-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                </svg>
+                            </button>
+                            <div id="accordion-{{ category }}" class="accordion-content px-8 py-6 hidden">
+                                {% for size, size_items in items.items() %}
+                                    <div class="mb-4">
+                                        <button type="button" class="w-full py-2 px-4 bg-blue-100 hover:bg-blue-200 text-blue-800 font-semibold text-left rounded-lg flex items-center justify-between transition-all duration-300" data-target="size-{{ size|replace(' ', '_') }}">
+                                            <span>{{ size }}</span>
+                                            <svg class="w-4 h-4 transform transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                            </svg>
+                                        </button>
+                                        <div id="size-{{ size|replace(' ', '_') }}" class="hidden mt-2">
+                                            {% for item in size_items %}
+                                                <div class="flex items-center justify-between mb-2">
+                                                    <label for="{{ category }}_{{ item.name }}" class="text-lg text-gray-700 flex-grow pr-4">{{ item.name }}</label>
+                                                    <span class="text-lg font-semibold text-green-600 mr-4">${{ item.price }}</span>
+                                                    <input type="number" id="{{ category }}_{{ item.name }}" name="{{ category }}_{{ item.name }}" min="0" value="0" class="w-24 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
                         </div>
-                        {% endfor %}
-                    </div>
-                </div>
+                    {% else %}
+                        <div class="bg-gray-50 rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out">
+                            <button type="button" class="accordion-toggle w-full py-6 px-8 bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold text-left flex items-center justify-between transition-all duration-300" data-target="accordion-{{ category }}">
+                                <span class="text-xl capitalize">{{ category.replace('_', ' ') }}</span>
+                                <svg class="w-6 h-6 transform transition-transform duration-300 accordion-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                </svg>
+                            </button>
+                            <div id="accordion-{{ category }}" class="accordion-content px-8 py-6 hidden">
+                                {% for item in items %}
+                                    <div class="flex items-center justify-between mb-6 last:mb-0">
+                                        <label for="{{ category }}_{{ item.name }}" class="text-lg text-gray-700 flex-grow pr-4">{{ item.name }}</label>
+                                        <span class="text-lg font-semibold text-green-600 mr-4">${{ item.price }}</span>
+                                        <input type="number" id="{{ category }}_{{ item.name }}" name="{{ category }}_{{ item.name }}" min="0" value="0" class="w-24 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
                 {% endfor %}
             </div>
 
@@ -99,19 +130,31 @@ document.addEventListener('DOMContentLoaded', function() {
     const generateEstimateBtn = document.getElementById('generate-estimate-btn');
     const estimateForm = document.getElementById('estimate-form');
     const downloadPdfBtn = document.getElementById('download-pdf-btn');
+    const sizeToggles = document.querySelectorAll('[data-target^="size-"]');
 
     accordions.forEach(toggle => {
-    toggle.addEventListener('click', function() {
-        const target = this.dataset.target;
-        const content = document.getElementById(target);
-        const icon = this.querySelector('.accordion-icon');
+        toggle.addEventListener('click', function() {
+            const target = this.dataset.target;
+            const content = document.getElementById(target);
+            const icon = this.querySelector('.accordion-icon');
 
-        if (content.style.display !== 'none') {  // Only toggle if the category is visible
+            if (content.style.display !== 'none') {  // Only toggle if the category is visible
+                content.classList.toggle('hidden');
+                icon.classList.toggle('rotate-180');
+            }
+        });
+    });
+
+    sizeToggles.forEach(toggle => {
+        toggle.addEventListener('click', function() {
+            const target = this.dataset.target;
+            const content = document.getElementById(target);
+            const icon = this.querySelector('svg');
+
             content.classList.toggle('hidden');
             icon.classList.toggle('rotate-180');
-        }
+        });
     });
-});
 
     clearButton.addEventListener('click', function() {
         const inputs = document.querySelectorAll('input[type="number"]');
@@ -177,27 +220,27 @@ function updateRealtimeTotal() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-        const searchInput = document.getElementById('item-search');
-        const items = document.querySelectorAll('.accordion-content > div');
+    const searchInput = document.getElementById('item-search');
+    const items = document.querySelectorAll('.accordion-content > div');
 
-        searchInput.addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
+    searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
 
-            items.forEach(item => {
-                const itemName = item.querySelector('label').textContent.toLowerCase();
-                const itemCategory = item.closest('.bg-gray-50').querySelector('.accordion-toggle span').textContent.toLowerCase();
-                const isVisible = itemName.includes(searchTerm) || itemCategory.includes(searchTerm);
-                
-                item.style.display = isVisible ? '' : 'none';
-            });
+        items.forEach(item => {
+            const itemName = item.querySelector('label').textContent.toLowerCase();
+            const itemCategory = item.closest('.bg-gray-50').querySelector('.accordion-toggle span').textContent.toLowerCase();
+            const isVisible = itemName.includes(searchTerm) || itemCategory.includes(searchTerm);
 
-            // Show/hide category containers based on whether they have visible items
-            document.querySelectorAll('.bg-gray-50').forEach(category => {
-                const hasVisibleItems = [...category.querySelectorAll('.accordion-content > div')].some(item => item.style.display !== 'none');
-                category.style.display = hasVisibleItems ? '' : 'none';
-            });
+            item.style.display = isVisible ? '' : 'none';
+        });
+
+        // Show/hide category containers based on whether they have visible items
+        document.querySelectorAll('.bg-gray-50').forEach(category => {
+            const hasVisibleItems = [...category.querySelectorAll('.accordion-content > div')].some(item => item.style.display !== 'none');
+            category.style.display = hasVisibleItems ? '' : 'none';
         });
     });
+});
 </script>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">

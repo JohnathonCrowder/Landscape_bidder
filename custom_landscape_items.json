@@ -222,5 +222,187 @@
             "name": "Lighting Installation (per hour)",
             "price": 125
         }
+    ],
+    "plumbing_supplies": [
+        {
+            "name": "PVC Pipe (1/2 inch, per 10 feet)",
+            "price": 4.5
+        },
+        {
+            "name": "PVC Pipe (3/4 inch, per 10 feet)",
+            "price": 5.75
+        },
+        {
+            "name": "PVC Pipe (1 inch, per 10 feet)",
+            "price": 7.25
+        },
+        {
+            "name": "PVC Pipe (2 inch, per 10 feet)",
+            "price": 12.5
+        },
+        {
+            "name": "PVC Pipe (4 inch, per 10 feet)",
+            "price": 22.0
+        },
+        {
+            "name": "PVC Elbow (1/2 inch)",
+            "price": 0.75
+        },
+        {
+            "name": "PVC Elbow (3/4 inch)",
+            "price": 1.0
+        },
+        {
+            "name": "PVC Elbow (1 inch)",
+            "price": 1.5
+        },
+        {
+            "name": "PVC Elbow (2 inch)",
+            "price": 3.25
+        },
+        {
+            "name": "PVC Elbow (4 inch)",
+            "price": 6.75
+        },
+        {
+            "name": "PVC Tee (1/2 inch)",
+            "price": 1.0
+        },
+        {
+            "name": "PVC Tee (3/4 inch)",
+            "price": 1.25
+        },
+        {
+            "name": "PVC Tee (1 inch)",
+            "price": 1.75
+        },
+        {
+            "name": "PVC Tee (2 inch)",
+            "price": 4.0
+        },
+        {
+            "name": "PVC Tee (4 inch)",
+            "price": 8.25
+        },
+        {
+            "name": "Flexible PVC Hose (1/2 inch, per foot)",
+            "price": 0.75
+        },
+        {
+            "name": "Flexible PVC Hose (3/4 inch, per foot)",
+            "price": 1.0
+        },
+        {
+            "name": "Flexible PVC Hose (1 inch, per foot)",
+            "price": 1.5
+        },
+        {
+            "name": "Ball Valve (1/2 inch)",
+            "price": 6.5
+        },
+        {
+            "name": "Ball Valve (3/4 inch)",
+            "price": 8.0
+        },
+        {
+            "name": "Ball Valve (1 inch)",
+            "price": 10.5
+        },
+        {
+            "name": "Check Valve (1/2 inch)",
+            "price": 7.25
+        },
+        {
+            "name": "Check Valve (3/4 inch)",
+            "price": 9.0
+        },
+        {
+            "name": "Check Valve (1 inch)",
+            "price": 12.0
+        },
+        {
+            "name": "Pipe Cutter (up to 1 inch)",
+            "price": 18.99
+        },
+        {
+            "name": "Pipe Cutter (up to 2 inch)",
+            "price": 29.99
+        },
+        {
+            "name": "Pipe Wrench (10 inch)",
+            "price": 15.5
+        },
+        {
+            "name": "Pipe Wrench (14 inch)",
+            "price": 22.75
+        },
+        {
+            "name": "Teflon Tape (1/2 inch x 520 inch)",
+            "price": 1.25
+        },
+        {
+            "name": "PVC Primer (4 oz)",
+            "price": 4.5
+        },
+        {
+            "name": "PVC Cement (4 oz)",
+            "price": 5.25
+        },
+        {
+            "name": "Pipe Insulation (1/2 inch, per 6 feet)",
+            "price": 2.75
+        },
+        {
+            "name": "Pipe Insulation (3/4 inch, per 6 feet)",
+            "price": 3.25
+        },
+        {
+            "name": "Pipe Hanger (1/2 inch, 10 pack)",
+            "price": 3.5
+        },
+        {
+            "name": "Pipe Hanger (3/4 inch, 10 pack)",
+            "price": 4.0
+        },
+        {
+            "name": "Pressure Gauge (0-100 psi)",
+            "price": 12.5
+        },
+        {
+            "name": "Hose Bibb (Outdoor Faucet)",
+            "price": 8.75
+        },
+        {
+            "name": "PVC Coupling (1/2 inch)",
+            "price": 0.5
+        },
+        {
+            "name": "PVC Coupling (3/4 inch)",
+            "price": 0.75
+        },
+        {
+            "name": "PVC Coupling (1 inch)",
+            "price": 1.0
+        },
+        {
+            "name": "PVC Cap (1/2 inch)",
+            "price": 0.6
+        },
+        {
+            "name": "PVC Cap (3/4 inch)",
+            "price": 0.85
+        },
+        {
+            "name": "PVC Cap (1 inch)",
+            "price": 1.1
+        },
+        {
+            "name": "Pipe Threader Set",
+            "price": 89.99
+        },
+        {
+            "name": "Drain Auger (25 feet)",
+            "price": 24.99
+        }
     ]
 }
