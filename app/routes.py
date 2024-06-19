@@ -147,14 +147,14 @@ def login():
     if current_user.is_authenticated:
         return redirect(url_for('main.index'))
     if request.method == 'POST':
-        username = request.form['username']
+        email = request.form['email']
         password = request.form['password']
-        user = User.query.filter_by(username=username).first()
+        user = User.query.filter_by(email=email).first()
         if user and user.check_password(password):
             login_user(user)
             return redirect(url_for('main.index'))
         else:
-            flash('Invalid username or password')
+            flash('Invalid email or password')
     return render_template('login.html')
 
 @bp.route('/logout')
@@ -168,12 +168,13 @@ def signup():
     if current_user.is_authenticated:
         return redirect(url_for('main.index'))
     if request.method == 'POST':
-        username = request.form['username']
+        email = request.form['email']
         password = request.form['password']
-        if User.query.filter_by(username=username).first():
-            flash('Username already exists')
+        company_name = request.form['company_name'] or None  # Set to None if empty
+        if User.query.filter_by(email=email).first():
+            flash('Email already exists')
         else:
-            user = User(username=username)
+            user = User(email=email, company_name=company_name)
             user.set_password(password)
             db.session.add(user)
             db.session.commit()

@@ -8,8 +8,12 @@
 
     {% if current_user.is_authenticated %}
     <div class="bg-white rounded-lg shadow-md p-6">
-        <p class="text-lg text-gray-700 mb-2">Username: {{ current_user.username }}</p>
-        <!-- Add any other user information you want to display here -->
+        <p class="text-lg text-gray-700 mb-2">Email: {{ current_user.email }}</p>
+        {% if current_user.company_name %}
+        <p class="text-lg text-gray-700 mb-2">Company Name: {{ current_user.company_name }}</p>
+        {% else %}
+        <p class="text-lg text-gray-700 mb-2">Company Name: Not provided</p>
+        {% endif %}
     </div>
     {% else %}
     <p>You are not logged in.</p>
