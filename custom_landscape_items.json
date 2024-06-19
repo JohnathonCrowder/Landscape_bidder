@@ -2,7 +2,7 @@
     "trees": [
         {
             "name": "Oak Tree (30 gal)",
-            "price": 450234.0
+            "price": 450
         },
         {
             "name": "Maple Tree (15 gal)",
@@ -23,10 +23,6 @@
         {
             "name": "Cherry Blossom Tree (20 gal)",
             "price": 300
-        },
-        {
-            "name": "joey",
-            "price": 234.0
         }
     ],
     "shrubs": [
@@ -225,12 +221,6 @@
         {
             "name": "Lighting Installation (per hour)",
             "price": 125
-        }
-    ],
-    "grass": [
-        {
-            "name": "Mower Rental ( Per Hour ) ",
-            "price": 100.0
         }
     ]
 }

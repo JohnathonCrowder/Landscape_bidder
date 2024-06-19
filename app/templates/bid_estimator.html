@@ -16,7 +16,11 @@
 </div>
 
 <section class="py-20 bg-white">
+    
     <div class="container mx-auto px-6">
+        <div class="mb-6">
+            <input type="text" id="item-search" placeholder="Search items..." class="w-full px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:border-blue-500">
+        </div>
         <form id="estimate-form" class="space-y-12">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 {% for category, items in items.items() %}
@@ -97,15 +101,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const downloadPdfBtn = document.getElementById('download-pdf-btn');
 
     accordions.forEach(toggle => {
-        toggle.addEventListener('click', function() {
-            const target = this.dataset.target;
-            const content = document.getElementById(target);
-            const icon = this.querySelector('.accordion-icon');
+    toggle.addEventListener('click', function() {
+        const target = this.dataset.target;
+        const content = document.getElementById(target);
+        const icon = this.querySelector('.accordion-icon');
 
+        if (content.style.display !== 'none') {  // Only toggle if the category is visible
             content.classList.toggle('hidden');
             icon.classList.toggle('rotate-180');
-        });
+        }
     });
+});
 
     clearButton.addEventListener('click', function() {
         const inputs = document.querySelectorAll('input[type="number"]');
@@ -169,6 +175,29 @@ function updateRealtimeTotal() {
     });
     document.getElementById('realtime-total').textContent = '$' + realtimeTotal.toFixed(2);
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('item-search');
+        const items = document.querySelectorAll('.accordion-content > div');
+
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+
+            items.forEach(item => {
+                const itemName = item.querySelector('label').textContent.toLowerCase();
+                const itemCategory = item.closest('.bg-gray-50').querySelector('.accordion-toggle span').textContent.toLowerCase();
+                const isVisible = itemName.includes(searchTerm) || itemCategory.includes(searchTerm);
+                
+                item.style.display = isVisible ? '' : 'none';
+            });
+
+            // Show/hide category containers based on whether they have visible items
+            document.querySelectorAll('.bg-gray-50').forEach(category => {
+                const hasVisibleItems = [...category.querySelectorAll('.accordion-content > div')].some(item => item.style.display !== 'none');
+                category.style.display = hasVisibleItems ? '' : 'none';
+            });
+        });
+    });
 </script>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
