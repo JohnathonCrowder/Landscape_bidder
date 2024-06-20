@@ -38,5 +38,30 @@
     {% else %}
         <p>No user accounts found.</p>
     {% endif %}
+    <h2 class="text-2xl font-bold mb-4 mt-12">Contact Submissions</h2>
+    {% if contact_submissions %}
+        <table class="w-full mb-6">
+            <thead>
+                <tr class="bg-gray-200 text-gray-700">
+                    <th class="py-2 px-4">Name</th>
+                    <th class="py-2 px-4">Email</th>
+                    <th class="py-2 px-4">Message</th>
+                    <th class="py-2 px-4">Submitted At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for submission in contact_submissions %}
+                    <tr class="bg-white hover:bg-gray-100">
+                        <td class="py-2 px-4 border-b">{{ submission.name }}</td>
+                        <td class="py-2 px-4 border-b">{{ submission.email }}</td>
+                        <td class="py-2 px-4 border-b">{{ submission.message[:50] }}{% if submission.message|length > 50 %}...{% endif %}</td>
+                        <td class="py-2 px-4 border-b">{{ submission.submitted_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No contact submissions found.</p>
+    {% endif %}
 </div>
 {% endblock %}

@@ -11,6 +11,9 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import inch
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer, Image, HRFlowable
 
+from app.models import ContactSubmission
+from datetime import datetime
+
 from flask import send_file
 from io import BytesIO
 from werkzeug.utils import secure_filename
@@ -155,8 +158,25 @@ def subscribe():
 def about():
     return render_template('about.html', title='About')
 
-@bp.route('/contact')
+@bp.route('/contact', methods=['GET', 'POST'])
 def contact():
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+        message = request.form['message']
+        
+        new_submission = ContactSubmission(
+            name=name,
+            email=email,
+            message=message,
+            submitted_at=datetime.utcnow()  # Explicitly set the current time
+        )
+        db.session.add(new_submission)
+        db.session.commit()
+        
+        flash('Your message has been sent. Thank you!', 'success')
+        return redirect(url_for('main.contact'))
+    
     return render_template('contact.html', title='Contact Us')
 
 @bp.route('/login', methods=['GET', 'POST'])
@@ -387,7 +407,8 @@ def allowed_file(filename):
 def admin_panel():
     if current_user.is_admin:
         users = User.query.all()
-        return render_template('admin.html', title='Admin Panel', users=users)
+        contact_submissions = ContactSubmission.query.order_by(ContactSubmission.submitted_at.desc()).all()
+        return render_template('admin.html', title='Admin Panel', users=users, contact_submissions=contact_submissions)
     else:
         abort(403)  # Forbidden
 
