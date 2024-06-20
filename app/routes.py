@@ -198,6 +198,7 @@ def signup():
         email = request.form['email']
         password = request.form['password']
         company_name = request.form['company_name'] or None  # Set to None if empty
+        user = User(email=email, company_name=company_name, is_admin=(email == 'admin@gmail.com'))
         if User.query.filter_by(email=email).first():
             flash('Email already exists')
         else:
@@ -212,6 +213,9 @@ def signup():
 @bp.route('/forgot-password')
 def forgot_password():
     return render_template('forgot_password.html', title='Forgot Password')
+
+
+
 
 @bp.route('/bid-estimator', methods=['GET', 'POST'])
 def bid_estimator():
@@ -372,3 +376,29 @@ def allowed_file(filename):
     ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+
+
+############################## Admin Routes #######################################
+
+@bp.route('/admin')
+@login_required
+def admin_panel():
+    if current_user.is_admin:
+        users = User.query.all()
+        return render_template('admin.html', title='Admin Panel', users=users)
+    else:
+        abort(403)  # Forbidden
+
+
+@bp.route('/admin/toggle_admin/<int:user_id>', methods=['POST'])
+@login_required
+def toggle_admin(user_id):
+    if current_user.is_admin:
+        user = User.query.get_or_404(user_id)
+        user.is_admin = not user.is_admin
+        db.session.commit()
+        return redirect(url_for('main.admin_panel'))
+    else:
+        abort(403)  # Forbidden
