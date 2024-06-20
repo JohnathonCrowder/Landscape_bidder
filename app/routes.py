@@ -220,12 +220,21 @@ def bid_estimator():
         items_data = []
 
         for category, items in LANDSCAPE_ITEMS.items():
-            for item in items:
-                quantity = request.form.get(f"{category}_{item['name']}", 0)
-                if int(quantity) > 0:
-                    item_cost = item['price'] * int(quantity)
-                    total_cost += item_cost
-                    items_data.append([item['name'], int(quantity), item['price'], item_cost])
+            if isinstance(items, dict):  # This is a category with sub-categories
+                for subcategory, subitems in items.items():
+                    for item in subitems:
+                        quantity = int(request.form.get(f"{category}_{subcategory}_{item['name']}", 0))
+                        if quantity > 0:
+                            item_cost = item['price'] * quantity
+                            total_cost += item_cost
+                            items_data.append([f"{category} - {subcategory} - {item['name']}", quantity, item['price'], item_cost])
+            else:  # This is a category without sub-categories
+                for item in items:
+                    quantity = int(request.form.get(f"{category}_{item['name']}", 0))
+                    if quantity > 0:
+                        item_cost = item['price'] * quantity
+                        total_cost += item_cost
+                        items_data.append([f"{category} - {item['name']}", quantity, item['price'], item_cost])
 
         if 'download_pdf' in request.form:
             if not items_data:
@@ -257,20 +266,32 @@ def custom_bidder():
         items_data = []
 
         for category, items in CUSTOM_LANDSCAPE_ITEMS.items():
-            for item in items:
-                quantity = int(request.form.get(f"{category}_{item['name']}", 0))
-                if quantity > 0:
-                    item_cost = item['price'] * quantity
-                    total_cost += item_cost
-                    items_data.append([item['name'], quantity, item['price'], item_cost])
+            if isinstance(items, dict):  # This is a category with sub-categories
+                for subcategory, subitems in items.items():
+                    for item in subitems:
+                        quantity = int(request.form.get(f"{category}_{subcategory}_{item['name']}", 0))
+                        if quantity > 0:
+                            item_cost = item['price'] * quantity
+                            total_cost += item_cost
+                            items_data.append([f"{category} - {subcategory} - {item['name']}", quantity, item['price'], item_cost])
+            else:  # This is a category without sub-categories
+                for item in items:
+                    quantity = int(request.form.get(f"{category}_{item['name']}", 0))
+                    if quantity > 0:
+                        item_cost = item['price'] * quantity
+                        total_cost += item_cost
+                        items_data.append([f"{category} - {item['name']}", quantity, item['price'], item_cost])
 
         if 'download_pdf' in request.form:
+            if not items_data:
+                return jsonify({'total_cost': total_cost})
+
             pdf_buffer = generate_pdf(items_data, total_cost, is_custom=True)
             response = make_response(pdf_buffer.getvalue())
             response.headers['Content-Type'] = 'application/pdf'
             response.headers['Content-Disposition'] = 'inline; filename=custom_bid_estimate.pdf'
             return response
-
+ 
         return jsonify({'total_cost': total_cost})
     
     return render_template('custom_bidder.html', title='Custom Bidder', landscape_items=CUSTOM_LANDSCAPE_ITEMS)
