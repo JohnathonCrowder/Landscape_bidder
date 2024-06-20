@@ -1,4 +1,5 @@
 LANDSCAPE_ITEMS = {
+     'plants': {
     'trees': [
         {'name': 'Oak Tree (30 gal)', 'price': 450},
         {'name': 'Maple Tree (15 gal)', 'price': 250},
@@ -23,6 +24,7 @@ LANDSCAPE_ITEMS = {
         {'name': 'Gravel (per ton)', 'price': 150},
         {'name': 'Rubber Mulch (per cubic yard)', 'price': 80},
     ],
+      },
     'services': [
         {'name': 'Lawn Mowing (per 1000 sq ft)', 'price': 50},
         {'name': 'Tree Trimming (per hour)', 'price': 150},
@@ -67,6 +69,33 @@ LANDSCAPE_ITEMS = {
         {'name': 'Lighting Control System', 'price': 1000},
         {'name': 'Lighting Installation (per hour)', 'price': 125},
     ],
+    'landscape_rocks': {
+        'ground_cover': [
+            {'name': 'Pea Gravel (per ton)', 'price': 35},
+            {'name': 'River Rock (per ton)', 'price': 45},
+            {'name': 'Crushed Granite (per ton)', 'price': 40},
+            {'name': 'Lava Rock (per cubic yard)', 'price': 55},
+            {'name': 'Decomposed Granite (per ton)', 'price': 38},
+        ],
+        'boulders': [
+            {'name': 'Small Boulder (1-2 ft)', 'price': 100},
+            {'name': 'Medium Boulder (2-3 ft)', 'price': 250},
+            {'name': 'Large Boulder (3-4 ft)', 'price': 500},
+            {'name': 'Extra Large Boulder (4-5 ft)', 'price': 800},
+        ],
+        'flagstone': [
+            {'name': 'Sandstone Flagstone (per sq ft)', 'price': 6},
+            {'name': 'Slate Flagstone (per sq ft)', 'price': 8},
+            {'name': 'Limestone Flagstone (per sq ft)', 'price': 7},
+            {'name': 'Quartzite Flagstone (per sq ft)', 'price': 9},
+        ],
+        'edging': [
+            {'name': 'Steel Edging (per 10 ft)', 'price': 25},
+            {'name': 'Aluminum Edging (per 10 ft)', 'price': 30},
+            {'name': 'Plastic Edging (per 20 ft)', 'price': 20},
+            {'name': 'Stone Edging (per linear ft)', 'price': 15},
+        ],
+    },
     'plumbing_supplies': {
         '1/2 inch': [
             {'name': 'PVC Pipe (1/2 inch, per 10 feet)', 'price': 4.50},

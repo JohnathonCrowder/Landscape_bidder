@@ -22,38 +22,104 @@
         </div>
         <form id="estimate-form" class="space-y-12">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                {% for category, items in items.items() %}
-                    {% if category == 'plumbing_supplies' %}
-                        <div class="bg-gray-50 rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out">
-                            <button type="button" class="accordion-toggle w-full py-6 px-8 bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold text-left flex items-center justify-between transition-all duration-300" data-target="accordion-{{ category }}">
-                                <span class="text-xl capitalize">{{ category.replace('_', ' ') }}</span>
-                                <svg class="w-6 h-6 transform transition-transform duration-300 accordion-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                                </svg>
-                            </button>
-                            <div id="accordion-{{ category }}" class="accordion-content px-8 py-6 hidden">
-                                {% for size, size_items in items.items() %}
-                                    <div class="mb-4">
-                                        <button type="button" class="w-full py-2 px-4 bg-blue-100 hover:bg-blue-200 text-blue-800 font-semibold text-left rounded-lg flex items-center justify-between transition-all duration-300" data-target="size-{{ size|replace(' ', '_') }}">
-                                            <span>{{ size }}</span>
-                                            <svg class="w-4 h-4 transform transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                                            </svg>
-                                        </button>
-                                        <div id="size-{{ size|replace(' ', '_') }}" class="hidden mt-2">
-                                            {% for item in size_items %}
-                                                <div class="flex items-center justify-between mb-2">
-                                                    <label for="{{ category }}_{{ item.name }}" class="text-lg text-gray-700 flex-grow pr-4">{{ item.name }}</label>
-                                                    <span class="text-lg font-semibold text-green-600 mr-4">${{ item.price }}</span>
-                                                    <input type="number" id="{{ category }}_{{ item.name }}" name="{{ category }}_{{ item.name }}" min="0" value="0" class="w-24 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                                </div>
-                                            {% endfor %}
-                                        </div>
+                {% if 'plants' in items %}
+                    <div class="bg-gray-50 rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out">
+                        <button type="button" class="accordion-toggle w-full py-6 px-8 bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold text-left flex items-center justify-between transition-all duration-300" data-target="accordion-plants">
+                            <span class="text-xl capitalize">Plants</span>
+                            <svg class="w-6 h-6 transform transition-transform duration-300 accordion-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                            </svg>
+                        </button>
+                        <div id="accordion-plants" class="accordion-content px-8 py-6 hidden">
+                            {% for plant_type, plant_items in items['plants'].items() %}
+                                <div class="mb-4">
+                                    <button type="button" class="w-full py-2 px-4 bg-blue-100 hover:bg-blue-200 text-blue-800 font-semibold text-left rounded-lg flex items-center justify-between transition-all duration-300" data-target="plant-{{ plant_type|replace(' ', '_') }}">
+                                        <span>{{ plant_type|capitalize }}</span>
+                                        <svg class="w-4 h-4 transform transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                        </svg>
+                                    </button>
+                                    <div id="plant-{{ plant_type|replace(' ', '_') }}" class="hidden mt-2">
+                                        {% for item in plant_items %}
+                                            <div class="flex items-center justify-between mb-2">
+                                                <label for="plants_{{ item.name }}" class="text-lg text-gray-700 flex-grow pr-4">{{ item.name }}</label>
+                                                <span class="text-lg font-semibold text-green-600 mr-4">${{ item.price }}</span>
+                                                <input type="number" id="plants_{{ item.name }}" name="plants_{{ item.name }}" min="0" value="0" class="w-24 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                            </div>
+                                        {% endfor %}
                                     </div>
-                                {% endfor %}
-                            </div>
+                                </div>
+                            {% endfor %}
                         </div>
-                    {% else %}
+                    </div>
+                {% endif %}
+
+                {% if 'plumbing_supplies' in items %}
+                    <div class="bg-gray-50 rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out">
+                        <button type="button" class="accordion-toggle w-full py-6 px-8 bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold text-left flex items-center justify-between transition-all duration-300" data-target="accordion-plumbing_supplies">
+                            <span class="text-xl capitalize">Plumbing Supplies</span>
+                            <svg class="w-6 h-6 transform transition-transform duration-300 accordion-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                            </svg>
+                        </button>
+                        <div id="accordion-plumbing_supplies" class="accordion-content px-8 py-6 hidden">
+                            {% for size, size_items in items['plumbing_supplies'].items() %}
+                                <div class="mb-4">
+                                    <button type="button" class="w-full py-2 px-4 bg-blue-100 hover:bg-blue-200 text-blue-800 font-semibold text-left rounded-lg flex items-center justify-between transition-all duration-300" data-target="size-{{ size|replace(' ', '_') }}">
+                                        <span>{{ size }}</span>
+                                        <svg class="w-4 h-4 transform transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                        </svg>
+                                    </button>
+                                    <div id="size-{{ size|replace(' ', '_') }}" class="hidden mt-2">
+                                        {% for item in size_items %}
+                                            <div class="flex items-center justify-between mb-2">
+                                                <label for="plumbing_supplies_{{ item.name }}" class="text-lg text-gray-700 flex-grow pr-4">{{ item.name }}</label>
+                                                <span class="text-lg font-semibold text-green-600 mr-4">${{ item.price }}</span>
+                                                <input type="number" id="plumbing_supplies_{{ item.name }}" name="plumbing_supplies_{{ item.name }}" min="0" value="0" class="w-24 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if 'landscape_rocks' in items %}
+                    <div class="bg-gray-50 rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out">
+                        <button type="button" class="accordion-toggle w-full py-6 px-8 bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold text-left flex items-center justify-between transition-all duration-300" data-target="accordion-landscape_rocks">
+                            <span class="text-xl capitalize">Landscape Rocks</span>
+                            <svg class="w-6 h-6 transform transition-transform duration-300 accordion-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                            </svg>
+                        </button>
+                        <div id="accordion-landscape_rocks" class="accordion-content px-8 py-6 hidden">
+                            {% for rock_type, rock_items in items['landscape_rocks'].items() %}
+                                <div class="mb-4">
+                                    <button type="button" class="w-full py-2 px-4 bg-blue-100 hover:bg-blue-200 text-blue-800 font-semibold text-left rounded-lg flex items-center justify-between transition-all duration-300" data-target="rock-{{ rock_type|replace(' ', '_') }}">
+                                        <span>{{ rock_type|capitalize }}</span>
+                                        <svg class="w-4 h-4 transform transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                        </svg>
+                                    </button>
+                                    <div id="rock-{{ rock_type|replace(' ', '_') }}" class="hidden mt-2">
+                                        {% for item in rock_items %}
+                                            <div class="flex items-center justify-between mb-2">
+                                                <label for="landscape_rocks_{{ item.name }}" class="text-lg text-gray-700 flex-grow pr-4">{{ item.name }}</label>
+                                                <span class="text-lg font-semibold text-green-600 mr-4">${{ item.price }}</span>
+                                                <input type="number" id="landscape_rocks_{{ item.name }}" name="landscape_rocks_{{ item.name }}" min="0" value="0" class="w-24 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% for category, items in items.items() %}
+                    {% if category not in ['plants', 'plumbing_supplies', 'landscape_rocks'] %}
                         <div class="bg-gray-50 rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out">
                             <button type="button" class="accordion-toggle w-full py-6 px-8 bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold text-left flex items-center justify-between transition-all duration-300" data-target="accordion-{{ category }}">
                                 <span class="text-xl capitalize">{{ category.replace('_', ' ') }}</span>
@@ -130,7 +196,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const generateEstimateBtn = document.getElementById('generate-estimate-btn');
     const estimateForm = document.getElementById('estimate-form');
     const downloadPdfBtn = document.getElementById('download-pdf-btn');
-    const sizeToggles = document.querySelectorAll('[data-target^="size-"]');
+    const subAccordions = document.querySelectorAll('[data-target^="plant-"], [data-target^="size-"], [data-target^="rock-"]');
 
     accordions.forEach(toggle => {
         toggle.addEventListener('click', function() {
@@ -145,7 +211,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    sizeToggles.forEach(toggle => {
+    subAccordions.forEach(toggle => {
         toggle.addEventListener('click', function() {
             const target = this.dataset.target;
             const content = document.getElementById(target);
@@ -182,7 +248,6 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => console.error('Error:', error));
     });
 
-    // Add event listener for the "Download PDF" button
     downloadPdfBtn.addEventListener('click', function(e) {
         e.preventDefault();
         const formData = new FormData(estimateForm);

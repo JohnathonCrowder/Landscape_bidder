@@ -1,82 +1,84 @@
 {
-    "trees": [
-        {
-            "name": "Oak Tree (30 gal)",
-            "price": 450
-        },
-        {
-            "name": "Maple Tree (15 gal)",
-            "price": 250
-        },
-        {
-            "name": "Dogwood Tree (5 gal)",
-            "price": 120
-        },
-        {
-            "name": "Birch Tree (10 gal)",
-            "price": 180
-        },
-        {
-            "name": "Magnolia Tree (25 gal)",
-            "price": 350
-        },
-        {
-            "name": "Cherry Blossom Tree (20 gal)",
-            "price": 300
-        }
-    ],
-    "shrubs": [
-        {
-            "name": "Azalea (3 gal)",
-            "price": 45
-        },
-        {
-            "name": "Boxwood (2 gal)",
-            "price": 35
-        },
-        {
-            "name": "Hydrangea (5 gal)",
-            "price": 65
-        },
-        {
-            "name": "Rhododendron (7 gal)",
-            "price": 85
-        },
-        {
-            "name": "Lilac (4 gal)",
-            "price": 55
-        },
-        {
-            "name": "Forsythia (3 gal)",
-            "price": 40
-        }
-    ],
-    "ground_cover": [
-        {
-            "name": "Mulch (per cubic yard)",
-            "price": 50
-        },
-        {
-            "name": "River Rocks (per ton)",
-            "price": 200
-        },
-        {
-            "name": "Sod (per 500 sq ft)",
-            "price": 300
-        },
-        {
-            "name": "Bark Nuggets (per cubic yard)",
-            "price": 60
-        },
-        {
-            "name": "Gravel (per ton)",
-            "price": 150
-        },
-        {
-            "name": "Rubber Mulch (per cubic yard)",
-            "price": 80
-        }
-    ],
+    "plants": {
+        "trees": [
+            {
+                "name": "Oak Tree (30 gal)",
+                "price": 450
+            },
+            {
+                "name": "Maple Tree (15 gal)",
+                "price": 250
+            },
+            {
+                "name": "Dogwood Tree (5 gal)",
+                "price": 120
+            },
+            {
+                "name": "Birch Tree (10 gal)",
+                "price": 180
+            },
+            {
+                "name": "Magnolia Tree (25 gal)",
+                "price": 350
+            },
+            {
+                "name": "Cherry Blossom Tree (20 gal)",
+                "price": 300
+            }
+        ],
+        "shrubs": [
+            {
+                "name": "Azalea (3 gal)",
+                "price": 45
+            },
+            {
+                "name": "Boxwood (2 gal)",
+                "price": 35
+            },
+            {
+                "name": "Hydrangea (5 gal)",
+                "price": 65
+            },
+            {
+                "name": "Rhododendron (7 gal)",
+                "price": 85
+            },
+            {
+                "name": "Lilac (4 gal)",
+                "price": 55
+            },
+            {
+                "name": "Forsythia (3 gal)",
+                "price": 40
+            }
+        ],
+        "ground_cover": [
+            {
+                "name": "Mulch (per cubic yard)",
+                "price": 50
+            },
+            {
+                "name": "River Rocks (per ton)",
+                "price": 200
+            },
+            {
+                "name": "Sod (per 500 sq ft)",
+                "price": 300
+            },
+            {
+                "name": "Bark Nuggets (per cubic yard)",
+                "price": 60
+            },
+            {
+                "name": "Gravel (per ton)",
+                "price": 150
+            },
+            {
+                "name": "Rubber Mulch (per cubic yard)",
+                "price": 80
+            }
+        ]
+    },
     "services": [
         {
             "name": "Lawn Mowing (per 1000 sq ft)",
@@ -223,186 +225,248 @@
             "price": 125
         }
     ],
-    "plumbing_supplies": [
-        {
-            "name": "PVC Pipe (1/2 inch, per 10 feet)",
-            "price": 4.5
-        },
-        {
-            "name": "PVC Pipe (3/4 inch, per 10 feet)",
-            "price": 5.75
-        },
-        {
-            "name": "PVC Pipe (1 inch, per 10 feet)",
-            "price": 7.25
-        },
-        {
-            "name": "PVC Pipe (2 inch, per 10 feet)",
-            "price": 12.5
-        },
-        {
-            "name": "PVC Pipe (4 inch, per 10 feet)",
-            "price": 22.0
-        },
-        {
-            "name": "PVC Elbow (1/2 inch)",
-            "price": 0.75
-        },
-        {
-            "name": "PVC Elbow (3/4 inch)",
-            "price": 1.0
-        },
-        {
-            "name": "PVC Elbow (1 inch)",
-            "price": 1.5
-        },
-        {
-            "name": "PVC Elbow (2 inch)",
-            "price": 3.25
-        },
-        {
-            "name": "PVC Elbow (4 inch)",
-            "price": 6.75
-        },
-        {
-            "name": "PVC Tee (1/2 inch)",
-            "price": 1.0
-        },
-        {
-            "name": "PVC Tee (3/4 inch)",
-            "price": 1.25
-        },
-        {
-            "name": "PVC Tee (1 inch)",
-            "price": 1.75
-        },
-        {
-            "name": "PVC Tee (2 inch)",
-            "price": 4.0
-        },
-        {
-            "name": "PVC Tee (4 inch)",
-            "price": 8.25
-        },
-        {
-            "name": "Flexible PVC Hose (1/2 inch, per foot)",
-            "price": 0.75
-        },
-        {
-            "name": "Flexible PVC Hose (3/4 inch, per foot)",
-            "price": 1.0
-        },
-        {
-            "name": "Flexible PVC Hose (1 inch, per foot)",
-            "price": 1.5
-        },
-        {
-            "name": "Ball Valve (1/2 inch)",
-            "price": 6.5
-        },
-        {
-            "name": "Ball Valve (3/4 inch)",
-            "price": 8.0
-        },
-        {
-            "name": "Ball Valve (1 inch)",
-            "price": 10.5
-        },
-        {
-            "name": "Check Valve (1/2 inch)",
-            "price": 7.25
-        },
-        {
-            "name": "Check Valve (3/4 inch)",
-            "price": 9.0
-        },
-        {
-            "name": "Check Valve (1 inch)",
-            "price": 12.0
-        },
-        {
-            "name": "Pipe Cutter (up to 1 inch)",
-            "price": 18.99
-        },
-        {
-            "name": "Pipe Cutter (up to 2 inch)",
-            "price": 29.99
-        },
-        {
-            "name": "Pipe Wrench (10 inch)",
-            "price": 15.5
-        },
-        {
-            "name": "Pipe Wrench (14 inch)",
-            "price": 22.75
-        },
-        {
-            "name": "Teflon Tape (1/2 inch x 520 inch)",
-            "price": 1.25
-        },
-        {
-            "name": "PVC Primer (4 oz)",
-            "price": 4.5
-        },
-        {
-            "name": "PVC Cement (4 oz)",
-            "price": 5.25
-        },
-        {
-            "name": "Pipe Insulation (1/2 inch, per 6 feet)",
-            "price": 2.75
-        },
-        {
-            "name": "Pipe Insulation (3/4 inch, per 6 feet)",
-            "price": 3.25
-        },
-        {
-            "name": "Pipe Hanger (1/2 inch, 10 pack)",
-            "price": 3.5
-        },
-        {
-            "name": "Pipe Hanger (3/4 inch, 10 pack)",
-            "price": 4.0
-        },
-        {
-            "name": "Pressure Gauge (0-100 psi)",
-            "price": 12.5
-        },
-        {
-            "name": "Hose Bibb (Outdoor Faucet)",
-            "price": 8.75
-        },
-        {
-            "name": "PVC Coupling (1/2 inch)",
-            "price": 0.5
-        },
-        {
-            "name": "PVC Coupling (3/4 inch)",
-            "price": 0.75
-        },
-        {
-            "name": "PVC Coupling (1 inch)",
-            "price": 1.0
-        },
-        {
-            "name": "PVC Cap (1/2 inch)",
-            "price": 0.6
-        },
-        {
-            "name": "PVC Cap (3/4 inch)",
-            "price": 0.85
-        },
-        {
-            "name": "PVC Cap (1 inch)",
-            "price": 1.1
-        },
-        {
-            "name": "Pipe Threader Set",
-            "price": 89.99
-        },
-        {
-            "name": "Drain Auger (25 feet)",
-            "price": 24.99
-        }
-    ]
+    "landscape_rocks": {
+        "ground_cover": [
+            {
+                "name": "Pea Gravel (per ton)",
+                "price": 35
+            },
+            {
+                "name": "River Rock (per ton)",
+                "price": 45
+            },
+            {
+                "name": "Crushed Granite (per ton)",
+                "price": 40
+            },
+            {
+                "name": "Lava Rock (per cubic yard)",
+                "price": 55
+            },
+            {
+                "name": "Decomposed Granite (per ton)",
+                "price": 38
+            }
+        ],
+        "boulders": [
+            {
+                "name": "Small Boulder (1-2 ft)",
+                "price": 100
+            },
+            {
+                "name": "Medium Boulder (2-3 ft)",
+                "price": 250
+            },
+            {
+                "name": "Large Boulder (3-4 ft)",
+                "price": 500
+            },
+            {
+                "name": "Extra Large Boulder (4-5 ft)",
+                "price": 800
+            }
+        ],
+        "flagstone": [
+            {
+                "name": "Sandstone Flagstone (per sq ft)",
+                "price": 6
+            },
+            {
+                "name": "Slate Flagstone (per sq ft)",
+                "price": 8
+            },
+            {
+                "name": "Limestone Flagstone (per sq ft)",
+                "price": 7
+            },
+            {
+                "name": "Quartzite Flagstone (per sq ft)",
+                "price": 9
+            }
+        ],
+        "edging": [
+            {
+                "name": "Steel Edging (per 10 ft)",
+                "price": 25
+            },
+            {
+                "name": "Aluminum Edging (per 10 ft)",
+                "price": 30
+            },
+            {
+                "name": "Plastic Edging (per 20 ft)",
+                "price": 20
+            },
+            {
+                "name": "Stone Edging (per linear ft)",
+                "price": 15
+            }
+        ]
+    },
+    "plumbing_supplies": {
+        "1/2 inch": [
+            {
+                "name": "PVC Pipe (1/2 inch, per 10 feet)",
+                "price": 4.5
+            },
+            {
+                "name": "PVC Elbow (1/2 inch)",
+                "price": 0.75
+            },
+            {
+                "name": "PVC Tee (1/2 inch)",
+                "price": 1.0
+            },
+            {
+                "name": "Ball Valve (1/2 inch)",
+                "price": 6.5
+            },
+            {
+                "name": "Check Valve (1/2 inch)",
+                "price": 7.25
+            },
+            {
+                "name": "PVC Coupling (1/2 inch)",
+                "price": 0.5
+            },
+            {
+                "name": "PVC Cap (1/2 inch)",
+                "price": 0.6
+            }
+        ],
+        "3/4 inch": [
+            {
+                "name": "PVC Pipe (3/4 inch, per 10 feet)",
+                "price": 5.75
+            },
+            {
+                "name": "PVC Elbow (3/4 inch)",
+                "price": 1.0
+            },
+            {
+                "name": "PVC Tee (3/4 inch)",
+                "price": 1.25
+            },
+            {
+                "name": "Ball Valve (3/4 inch)",
+                "price": 8.0
+            },
+            {
+                "name": "Check Valve (3/4 inch)",
+                "price": 9.0
+            },
+            {
+                "name": "PVC Coupling (3/4 inch)",
+                "price": 0.75
+            },
+            {
+                "name": "PVC Cap (3/4 inch)",
+                "price": 0.85
+            }
+        ],
+        "1 inch": [
+            {
+                "name": "PVC Pipe (1 inch, per 10 feet)",
+                "price": 7.25
+            },
+            {
+                "name": "PVC Elbow (1 inch)",
+                "price": 1.5
+            },
+            {
+                "name": "PVC Tee (1 inch)",
+                "price": 1.75
+            },
+            {
+                "name": "Ball Valve (1 inch)",
+                "price": 10.5
+            },
+            {
+                "name": "Check Valve (1 inch)",
+                "price": 12.0
+            },
+            {
+                "name": "PVC Coupling (1 inch)",
+                "price": 1.0
+            },
+            {
+                "name": "PVC Cap (1 inch)",
+                "price": 1.1
+            }
+        ],
+        "2 inch": [
+            {
+                "name": "PVC Pipe (2 inch, per 10 feet)",
+                "price": 12.5
+            },
+            {
+                "name": "PVC Elbow (2 inch)",
+                "price": 3.25
+            },
+            {
+                "name": "PVC Tee (2 inch)",
+                "price": 4.0
+            }
+        ],
+        "4 inch": [
+            {
+                "name": "PVC Pipe (4 inch, per 10 feet)",
+                "price": 22.0
+            },
+            {
+                "name": "PVC Elbow (4 inch)",
+                "price": 6.75
+            },
+            {
+                "name": "PVC Tee (4 inch)",
+                "price": 8.25
+            }
+        ],
+        "Other": [
+            {
+                "name": "Pipe Cutter (up to 1 inch)",
+                "price": 18.99
+            },
+            {
+                "name": "Pipe Cutter (up to 2 inch)",
+                "price": 29.99
+            },
+            {
+                "name": "Pipe Wrench (10 inch)",
+                "price": 15.5
+            },
+            {
+                "name": "Pipe Wrench (14 inch)",
+                "price": 22.75
+            },
+            {
+                "name": "Teflon Tape (1/2 inch x 520 inch)",
+                "price": 1.25
+            },
+            {
+                "name": "PVC Primer (4 oz)",
+                "price": 4.5
+            },
+            {
+                "name": "PVC Cement (4 oz)",
+                "price": 5.25
+            },
+            {
+                "name": "Pressure Gauge (0-100 psi)",
+                "price": 12.5
+            },
+            {
+                "name": "Hose Bibb (Outdoor Faucet)",
+                "price": 8.75
+            },
+            {
+                "name": "Pipe Threader Set",
+                "price": 89.99
+            },
+            {
+                "name": "Drain Auger (25 feet)",
+                "price": 24.99
+            }
+        ]
+    }
 }
