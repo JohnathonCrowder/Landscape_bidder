@@ -14,6 +14,8 @@ from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, 
 from app.models import ContactSubmission
 from datetime import datetime
 
+from flask import jsonify, abort
+
 from flask import send_file
 from io import BytesIO
 from werkzeug.utils import secure_filename
@@ -421,5 +423,19 @@ def toggle_admin(user_id):
         user.is_admin = not user.is_admin
         db.session.commit()
         return redirect(url_for('main.admin_panel'))
+    else:
+        abort(403)  # Forbidden
+
+@bp.route('/admin/get_message/<int:submission_id>', methods=['GET'])
+@login_required
+def get_message(submission_id):
+    if current_user.is_admin:
+        submission = ContactSubmission.query.get_or_404(submission_id)
+        return jsonify({
+            'name': submission.name,
+            'email': submission.email,
+            'message': submission.message,
+            'submitted_at': submission.submitted_at.strftime('%Y-%m-%d %H:%M:%S')
+        })
     else:
         abort(403)  # Forbidden
