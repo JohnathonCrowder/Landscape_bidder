@@ -439,3 +439,14 @@ def get_message(submission_id):
         })
     else:
         abort(403)  # Forbidden
+
+@bp.route('/admin/delete_message/<int:submission_id>', methods=['POST'])
+@login_required
+def delete_message(submission_id):
+    if current_user.is_admin:
+        submission = ContactSubmission.query.get_or_404(submission_id)
+        db.session.delete(submission)
+        db.session.commit()
+        return jsonify({'success': True})
+    else:
+        abort(403)  # Forbidden
