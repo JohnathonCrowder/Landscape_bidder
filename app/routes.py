@@ -285,6 +285,18 @@ def update_company_name():
     flash('Company name updated successfully')
     return redirect(url_for('main.account'))
 
+@bp.route('/update_account', methods=['POST'])
+@login_required
+def update_account():
+    current_user.company_name = request.form.get('company_name', '').strip() or None
+    current_user.website = request.form.get('website', '').strip() or None
+    current_user.business_email = request.form.get('business_email', '').strip() or None
+    current_user.phone_number = request.form.get('phone_number', '').strip() or None
+    
+    db.session.commit()
+    flash('Your account information has been updated successfully', 'success')
+    return redirect(url_for('main.account'))
+
 @bp.route('/custom-bidder', methods=['GET', 'POST'])
 def custom_bidder():
     if request.method == 'POST':

@@ -10,8 +10,11 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))
     logo = db.Column(db.LargeBinary, nullable=True)
     logo_mimetype = db.Column(db.String(64), nullable=True)
-
+    website = db.Column(db.String(120), nullable=True)
+    business_email = db.Column(db.String(120), nullable=True)
+    phone_number = db.Column(db.String(20), nullable=True)
     is_admin = db.Column(db.Boolean, default=False)
+
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
