@@ -64,104 +64,43 @@
 
         <form method="POST" action="{{ url_for('main.custom_bidder') }}" class="space-y-12 mt-12">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                {% if 'plants' in landscape_items %}
-                    <div class="bg-gray-50 rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out">
-                        <button type="button" class="accordion-toggle w-full py-6 px-8 bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold text-left flex items-center justify-between transition-all duration-300" data-target="accordion-plants">
-                            <span class="text-xl capitalize">Plants</span>
-                            <svg class="w-6 h-6 transform transition-transform duration-300 accordion-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                            </svg>
-                        </button>
-                        <div id="accordion-plants" class="accordion-content px-8 py-6 hidden">
-                            {% for plant_type, plant_items in landscape_items['plants'].items() %}
-                                <div class="mb-4">
-                                    <button type="button" class="w-full py-2 px-4 bg-blue-100 hover:bg-blue-200 text-blue-800 font-semibold text-left rounded-lg flex items-center justify-between transition-all duration-300" data-target="plant-{{ plant_type|replace(' ', '_') }}">
-                                        <span>{{ plant_type|capitalize }}</span>
-                                        <svg class="w-4 h-4 transform transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                                        </svg>
-                                    </button>
-                                    <div id="plant-{{ plant_type|replace(' ', '_') }}" class="hidden mt-2">
-                                        {% for item in plant_items %}
-                                            <div class="flex items-center justify-between mb-2">
-                                                <label for="plants_{{ item.name }}" class="text-lg text-gray-700 flex-grow pr-4">{{ item.name }}</label>
-                                                <span class="text-lg font-semibold text-green-600 mr-4">${{ item.price }}</span>
-                                                <input type="number" id="plants_{{ item.name }}" name="plants_{{ item.name }}" min="0" value="0" class="w-24 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                            </div>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                {% endif %}
-
-                {% if 'plumbing_supplies' in landscape_items %}
-                    <div class="bg-gray-50 rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out">
-                        <button type="button" class="accordion-toggle w-full py-6 px-8 bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold text-left flex items-center justify-between transition-all duration-300" data-target="accordion-plumbing_supplies">
-                            <span class="text-xl capitalize">Plumbing Supplies</span>
-                            <svg class="w-6 h-6 transform transition-transform duration-300 accordion-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                            </svg>
-                        </button>
-                        <div id="accordion-plumbing_supplies" class="accordion-content px-8 py-6 hidden">
-                            {% for size, size_items in landscape_items['plumbing_supplies'].items() %}
-                                <div class="mb-4">
-                                    <button type="button" class="w-full py-2 px-4 bg-blue-100 hover:bg-blue-200 text-blue-800 font-semibold text-left rounded-lg flex items-center justify-between transition-all duration-300" data-target="size-{{ size|replace(' ', '_') }}">
-                                        <span>{{ size }}</span>
-                                        <svg class="w-4 h-4 transform transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                                        </svg>
-                                    </button>
-                                    <div id="size-{{ size|replace(' ', '_') }}" class="hidden mt-2">
-                                        {% for item in size_items %}
-                                            <div class="flex items-center justify-between mb-2">
-                                                <label for="plumbing_supplies_{{ item.name }}" class="text-lg text-gray-700 flex-grow pr-4">{{ item.name }}</label>
-                                                <span class="text-lg font-semibold text-green-600 mr-4">${{ item.price }}</span>
-                                                <input type="number" id="plumbing_supplies_{{ item.name }}" name="plumbing_supplies_{{ item.name }}" min="0" value="0" class="w-24 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                            </div>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                {% endif %}
-
-                {% if 'landscape_rocks' in landscape_items %}
-                    <div class="bg-gray-50 rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out">
-                        <button type="button" class="accordion-toggle w-full py-6 px-8 bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold text-left flex items-center justify-between transition-all duration-300" data-target="accordion-landscape_rocks">
-                            <span class="text-xl capitalize">Landscape Rocks</span>
-                            <svg class="w-6 h-6 transform transition-transform duration-300 accordion-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                            </svg>
-                        </button>
-                        <div id="accordion-landscape_rocks" class="accordion-content px-8 py-6 hidden">
-                            {% for rock_type, rock_items in landscape_items['landscape_rocks'].items() %}
-                                <div class="mb-4">
-                                    <button type="button" class="w-full py-2 px-4 bg-blue-100 hover:bg-blue-200 text-blue-800 font-semibold text-left rounded-lg flex items-center justify-between transition-all duration-300" data-target="rock-{{ rock_type|replace(' ', '_') }}">
-                                        <span>{{ rock_type|capitalize }}</span>
-                                        <svg class="w-4 h-4 transform transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                                        </svg>
-                                    </button>
-                                    <div id="rock-{{ rock_type|replace(' ', '_') }}" class="hidden mt-2">
-                                        {% for item in rock_items %}
-                                            <div class="flex items-center justify-between mb-2">
-                                                <label for="landscape_rocks_{{ item.name }}" class="text-lg text-gray-700 flex-grow pr-4">{{ item.name }}</label>
-                                                <span class="text-lg font-semibold text-green-600 mr-4">${{ item.price }}</span>
-                                                <input type="number" id="landscape_rocks_{{ item.name }}" name="landscape_rocks_{{ item.name }}" min="0" value="0" class="w-24 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                            </div>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                {% endif %}
-
                 {% for category, items in landscape_items.items() %}
-                    {% if category not in ['plants', 'plumbing_supplies', 'landscape_rocks'] %}
+                    {% if category in ['plants', 'plumbing_supplies', 'landscape_rocks'] %}
+                        <div class="bg-gray-50 rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out">
+                            <button type="button" class="accordion-toggle w-full py-6 px-8 bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold text-left flex items-center justify-between transition-all duration-300" data-target="accordion-{{ category }}">
+                                <span class="text-xl capitalize">{{ category.replace('_', ' ') }}</span>
+                                <svg class="w-6 h-6 transform transition-transform duration-300 accordion-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                </svg>
+                            </button>
+                            <div id="accordion-{{ category }}" class="accordion-content px-8 py-6 hidden">
+                                {% for subcategory, subitems in items.items() %}
+                                    <div class="mb-4">
+                                        <button type="button" class="subcategory-toggle w-full py-2 px-4 bg-blue-100 hover:bg-blue-200 text-blue-800 font-semibold text-left rounded-lg flex items-center justify-between transition-all duration-300" data-target="{{ category }}-{{ subcategory|replace(' ', '_') }}">
+                                            <span>{{ subcategory|capitalize }}</span>
+                                            <svg class="w-4 h-4 transform transition-transform duration-300 subcategory-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                            </svg>
+                                        </button>
+                                        <div id="{{ category }}-{{ subcategory|replace(' ', '_') }}" class="subcategory-content hidden mt-2">
+                                            {% for item in subitems %}
+                                                <div class="flex items-center justify-between mb-2">
+                                                    <label for="{{ category }}_{{ subcategory }}_{{ item.name }}" class="text-lg text-gray-700 flex-grow pr-4">{{ item.name }}</label>
+                                                    <span id="{{ category }}_{{ subcategory }}_{{ item.name }}_price" class="text-lg font-semibold text-green-600 mr-4">${{ item.price }}</span>
+                                                    <button type="button" onclick="showPriceInput('{{ category }}', '{{ item.name }}', '{{ subcategory }}')" class="mr-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 px-3 rounded-full transition duration-300 ease-in-out transform hover:scale-105">
+                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                                        </svg>
+                                                    </button>
+                                                    <input type="number" id="{{ category }}_{{ subcategory }}_{{ item.name }}" name="{{ category }}_{{ subcategory }}_{{ item.name }}" min="0" value="0" class="w-24 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% else %}
                         <div class="bg-gray-50 rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out">
                             <button type="button" class="accordion-toggle w-full py-6 px-8 bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold text-left flex items-center justify-between transition-all duration-300" data-target="accordion-{{ category }}">
                                 <span class="text-xl capitalize">{{ category.replace('_', ' ') }}</span>
@@ -173,7 +112,12 @@
                                 {% for item in items %}
                                     <div class="flex items-center justify-between mb-6 last:mb-0">
                                         <label for="{{ category }}_{{ item.name }}" class="text-lg text-gray-700 flex-grow pr-4">{{ item.name }}</label>
-                                        <span class="text-lg font-semibold text-green-600 mr-4">${{ item.price }}</span>
+                                        <span id="{{ category }}_{{ item.name }}_price" class="text-lg font-semibold text-green-600 mr-4">${{ item.price }}</span>
+                                        <button type="button" onclick="showPriceInput('{{ category }}', '{{ item.name }}')" class="mr-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 px-3 rounded-full transition duration-300 ease-in-out transform hover:scale-105">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                            </svg>
+                                        </button>
                                         <input type="number" id="{{ category }}_{{ item.name }}" name="{{ category }}_{{ item.name }}" min="0" value="0" class="w-24 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                     </div>
                                 {% endfor %}
@@ -239,7 +183,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const searchInput = document.getElementById('item-search');
-        const items = document.querySelectorAll('.accordion-content > div');
+        const items = document.querySelectorAll('.accordion-content > div, .subcategory-content > div');
 
         searchInput.addEventListener('input', function() {
             const searchTerm = this.value.toLowerCase();
@@ -254,7 +198,7 @@
 
             // Show/hide category containers based on whether they have visible items
             document.querySelectorAll('.bg-gray-50').forEach(category => {
-                const hasVisibleItems = [...category.querySelectorAll('.accordion-content > div')].some(item => item.style.display !== 'none');
+                const hasVisibleItems = [...category.querySelectorAll('.accordion-content > div, .subcategory-content > div')].some(item => item.style.display !== 'none');
                 category.style.display = hasVisibleItems ? '' : 'none';
             });
         });
@@ -267,7 +211,7 @@
         const customItemsToggle = document.getElementById('custom-items-toggle');
         const customItemsContainer = document.getElementById('custom-items-container');
         const customItemsArrow = customItemsToggle.querySelector('svg');
-        const subAccordions = document.querySelectorAll('[data-target^="plant-"], [data-target^="size-"], [data-target^="rock-"]');
+        const subAccordions = document.querySelectorAll('.subcategory-toggle');
 
         accordions.forEach(toggle => {
             toggle.addEventListener('click', function() {
@@ -286,7 +230,7 @@
             toggle.addEventListener('click', function() {
                 const target = this.dataset.target;
                 const content = document.getElementById(target);
-                const icon = this.querySelector('svg');
+                const icon = this.querySelector('.subcategory-icon');
 
                 content.classList.toggle('hidden');
                 icon.classList.toggle('rotate-180');
@@ -389,6 +333,63 @@
         }
     }
 
+    function showPriceInput(category, itemName, subcategory = null) {
+        const priceSpanId = subcategory ? `${category}_${subcategory}_${itemName}_price` : `${category}_${itemName}_price`;
+        const priceSpan = document.getElementById(priceSpanId);
+        const currentPrice = parseFloat(priceSpan.textContent.slice(1));
+
+        const priceInput = document.createElement('input');
+        priceInput.type = 'number';
+        priceInput.min = '0';
+        priceInput.step = '0.01';
+        priceInput.value = currentPrice;
+        priceInput.className = 'w-24 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent';
+
+        const updateButton = document.createElement('button');
+        updateButton.textContent = 'Update';
+        updateButton.className = 'ml-2 bg-green-500 hover:bg-green-600 text-white font-semibold py-1 px-3 rounded-full transition duration-300 ease-in-out transform hover:scale-105';
+        updateButton.onclick = function() {
+            updateItemPrice(category, subcategory, itemName, parseFloat(priceInput.value));
+            priceSpan.textContent = `$${priceInput.value}`;
+            priceSpan.style.display = 'inline';
+            priceInput.remove();
+            updateButton.remove();
+        };
+
+        priceSpan.style.display = 'none';
+        priceSpan.parentNode.insertBefore(priceInput, priceSpan.nextSibling);
+        priceSpan.parentNode.insertBefore(updateButton, priceInput.nextSibling);
+    }
+
+    function updateItemPrice(category, subcategory, itemName, newPrice) {
+        const data = {
+            category: category,
+            item_name: itemName,
+            new_price: newPrice
+        };
+
+        if (subcategory) {
+            data.subcategory = subcategory;
+        }
+
+        fetch('/update-item-price', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Item price updated successfully');
+            } else {
+                alert('Failed to update item price');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
     function downloadPDF() {
         const form = document.querySelector('form[action="{{ url_for("main.custom_bidder") }}"]');
         const formData = new FormData(form);
@@ -401,9 +402,7 @@
         .then(response => response.blob())
         .then(blob => {
             const url = window.URL.createObjectURL(blob);
-            window.open(url,
-
- '_blank');
+            window.open(url, '_blank');
         })
         .catch(error => console.error('Error:', error));
     }

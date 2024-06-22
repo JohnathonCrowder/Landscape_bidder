@@ -82,7 +82,7 @@
     "services": [
         {
             "name": "Lawn Mowing (per 1000 sq ft)",
-            "price": 50
+            "price": 500
         },
         {
             "name": "Tree Trimming (per hour)",
@@ -307,7 +307,7 @@
         "1/2 inch": [
             {
                 "name": "PVC Pipe (1/2 inch, per 10 feet)",
-                "price": 4.5
+                "price": 30000
             },
             {
                 "name": "PVC Elbow (1/2 inch)",

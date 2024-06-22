@@ -14,6 +14,8 @@ from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, 
 from app.models import ContactSubmission
 from datetime import datetime
 
+
+
 from flask import jsonify, abort
 
 from flask import send_file
@@ -309,16 +311,18 @@ def custom_bidder():
                     for item in subitems:
                         quantity = int(request.form.get(f"{category}_{subcategory}_{item['name']}", 0))
                         if quantity > 0:
-                            item_cost = item['price'] * quantity
+                            item_price = next((subitem['price'] for subitem in subitems if subitem['name'] == item['name']), item['price'])
+                            item_cost = item_price * quantity
                             total_cost += item_cost
-                            items_data.append([f"{category} - {subcategory} - {item['name']}", quantity, item['price'], item_cost])
+                            items_data.append([f"{category} - {subcategory} - {item['name']}", quantity, item_price, item_cost])
             else:  # This is a category without sub-categories
                 for item in items:
                     quantity = int(request.form.get(f"{category}_{item['name']}", 0))
                     if quantity > 0:
-                        item_cost = item['price'] * quantity
+                        item_price = next((i['price'] for i in items if i['name'] == item['name']), item['price'])
+                        item_cost = item_price * quantity
                         total_cost += item_cost
-                        items_data.append([f"{category} - {item['name']}", quantity, item['price'], item_cost])
+                        items_data.append([f"{category} - {item['name']}", quantity, item_price, item_cost])
 
         if 'download_pdf' in request.form:
             if not items_data:
@@ -329,18 +333,20 @@ def custom_bidder():
             response.headers['Content-Type'] = 'application/pdf'
             response.headers['Content-Disposition'] = 'inline; filename=custom_bid_estimate.pdf'
             return response
- 
+
         return jsonify({'total_cost': total_cost})
-    
+
     return render_template('custom_bidder.html', title='Custom Bidder', landscape_items=CUSTOM_LANDSCAPE_ITEMS)
 
 @bp.route('/update-item-price', methods=['POST'])
 def update_item_price_route():
-    category = request.form.get('category')
-    item_name = request.form.get('item_name')
-    new_price = float(request.form.get('new_price'))
-    
-    update_item_price(category, item_name, new_price)
+    data = request.get_json()
+    category = data.get('category')
+    subcategory = data.get('subcategory')
+    item_name = data.get('item_name')
+    new_price = data.get('new_price')
+
+    update_item_price(category, item_name, new_price, subcategory)
     return jsonify({'success': True})
 
 @bp.route('/account')
