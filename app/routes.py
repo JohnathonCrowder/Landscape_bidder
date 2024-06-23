@@ -14,6 +14,9 @@ from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, 
 from app.models import ContactSubmission
 from datetime import datetime
 
+from flask import render_template
+from app.data import PROJECT_IDEAS
+
 
 
 from flask import jsonify, abort
@@ -468,3 +471,7 @@ def delete_message(submission_id):
         return jsonify({'success': True})
     else:
         abort(403)  # Forbidden
+
+@bp.route('/project-ideas')
+def project_ideas():
+    return render_template('project_ideas.html', project_ideas=PROJECT_IDEAS)

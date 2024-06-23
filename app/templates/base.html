@@ -24,6 +24,7 @@
                     <a href="{{ url_for('main.bid_estimator') }}" class="text-lg font-medium hover:text-blue-100 transition duration-300 ease-in-out">Bid Estimator</a>
                     <a href="{{ url_for('main.subscribe') }}" class="text-lg font-medium hover:text-blue-100 transition duration-300 ease-in-out">Subscribe</a>
                     <a href="{{ url_for('main.contact') }}" class="text-lg font-medium hover:text-blue-100 transition duration-300 ease-in-out">Contact</a>
+                    <li><a href="{{ url_for('main.project_ideas') }}" class="hover:text-blue-400">Project Ideas</a></li>
                     {% if current_user.is_authenticated %}
                         <a href="{{ url_for('main.custom_bidder') }}" class="text-lg font-medium hover:text-blue-100 transition duration-300 ease-in-out">Custom Bidder</a>
                         {% if current_user.is_admin %}
@@ -51,6 +52,7 @@
                     <a href="{{ url_for('main.bid_estimator') }}" class="text-lg font-medium hover:text-blue-100 transition duration-300 ease-in-out">Bid Estimator</a>
                     <a href="{{ url_for('main.subscribe') }}" class="text-lg font-medium hover:text-blue-100 transition duration-300 ease-in-out">Subscribe</a>
                     <a href="{{ url_for('main.contact') }}" class="text-lg font-medium hover:text-blue-100 transition duration-300 ease-in-out">Contact</a>
+                    <li><a href="{{ url_for('main.project_ideas') }}" class="hover:text-blue-400">Project Ideas</a></li>
                     {% if current_user.is_authenticated %}
                         <a href="{{ url_for('main.custom_bidder') }}" class="text-lg font-medium hover:text-blue-100 transition duration-300 ease-in-out">Custom Bidder</a>
                         {% if current_user.is_admin %}
