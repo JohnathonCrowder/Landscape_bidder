@@ -17,6 +17,11 @@ from datetime import datetime
 from flask import render_template
 from app.data import PROJECT_IDEAS
 
+from flask import render_template, request, redirect, url_for, flash
+from flask_login import login_required, current_user
+from app.models import BlogPost
+from app import db
+
 
 
 from flask import jsonify, abort
@@ -427,13 +432,13 @@ def allowed_file(filename):
 
 @bp.route('/admin')
 @login_required
-def admin_panel():
-    if current_user.is_admin:
-        users = User.query.all()
-        contact_submissions = ContactSubmission.query.order_by(ContactSubmission.submitted_at.desc()).all()
-        return render_template('admin.html', title='Admin Panel', users=users, contact_submissions=contact_submissions)
-    else:
-        abort(403)  # Forbidden
+def admin():
+    if not current_user.is_admin:
+        abort(403)
+    users = User.query.all()
+    contact_submissions = ContactSubmission.query.order_by(ContactSubmission.submitted_at.desc()).all()
+    blog_posts = BlogPost.query.order_by(BlogPost.created_at.desc()).all()
+    return render_template('admin.html', users=users, contact_submissions=contact_submissions, blog_posts=blog_posts)
 
 
 @bp.route('/admin/toggle_admin/<int:user_id>', methods=['POST'])
@@ -475,3 +480,64 @@ def delete_message(submission_id):
 @bp.route('/project-ideas')
 def project_ideas():
     return render_template('project_ideas.html', project_ideas=PROJECT_IDEAS)
+
+
+
+
+
+
+
+
+
+
+
+
+####################   BLog Routes #########################
+
+@bp.route('/blog')
+def blog():
+    posts = BlogPost.query.order_by(BlogPost.created_at.desc()).all()
+    return render_template('blog/index.html', posts=posts)
+
+@bp.route('/blog/<int:post_id>')
+def blog_post(post_id):
+    post = BlogPost.query.get_or_404(post_id)
+    return render_template('blog/post.html', post=post)
+
+@bp.route('/blog/new', methods=['GET', 'POST'])
+@login_required
+def new_post():
+    if request.method == 'POST':
+        title = request.form['title']
+        content = request.form['content']
+        post = BlogPost(title=title, content=content, author=current_user)
+        db.session.add(post)
+        db.session.commit()
+        flash('Your post has been created!', 'success')
+        return redirect(url_for('main.blog'))
+    return render_template('blog/new_post.html')
+
+@bp.route('/blog/<int:post_id>/edit', methods=['GET', 'POST'])
+@login_required
+def edit_post(post_id):
+    post = BlogPost.query.get_or_404(post_id)
+    if post.author != current_user:
+        abort(403)
+    if request.method == 'POST':
+        post.title = request.form['title']
+        post.content = request.form['content']
+        db.session.commit()
+        flash('Your post has been updated!', 'success')
+        return redirect(url_for('main.blog_post', post_id=post.id))
+    return render_template('blog/edit_post.html', post=post)
+
+@bp.route('/blog/<int:post_id>/delete', methods=['POST'])
+@login_required
+def delete_post(post_id):
+    post = BlogPost.query.get_or_404(post_id)
+    if post.author != current_user:
+        abort(403)
+    db.session.delete(post)
+    db.session.commit()
+    flash('Your post has been deleted!', 'success')
+    return redirect(url_for('main.blog'))
