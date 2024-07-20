@@ -23,6 +23,11 @@ from app.models import BlogPost
 from app import db
 
 
+from flask import render_template, request, redirect, url_for, flash, abort
+from flask_login import login_required, current_user
+from app.models import BlogPost, User, ContactSubmission
+from app import db
+
 
 from flask import jsonify, abort
 
@@ -430,14 +435,39 @@ def allowed_file(filename):
 
 ############################## Admin Routes #######################################
 
-@bp.route('/admin')
+@bp.route('/admin', methods=['GET', 'POST'])
 @login_required
 def admin():
     if not current_user.is_admin:
         abort(403)
+    
     users = User.query.all()
     contact_submissions = ContactSubmission.query.order_by(ContactSubmission.submitted_at.desc()).all()
     blog_posts = BlogPost.query.order_by(BlogPost.created_at.desc()).all()
+
+    if request.method == 'POST':
+        if 'new_post' in request.form:
+            title = request.form['title']
+            content = request.form['content']
+            post = BlogPost(title=title, content=content, author=current_user)
+            db.session.add(post)
+            db.session.commit()
+            flash('New blog post created successfully!', 'success')
+        elif 'edit_post' in request.form:
+            post_id = request.form['post_id']
+            post = BlogPost.query.get_or_404(post_id)
+            post.title = request.form['title']
+            post.content = request.form['content']
+            db.session.commit()
+            flash('Blog post updated successfully!', 'success')
+        elif 'delete_post' in request.form:
+            post_id = request.form['post_id']
+            post = BlogPost.query.get_or_404(post_id)
+            db.session.delete(post)
+            db.session.commit()
+            flash('Blog post deleted successfully!', 'success')
+        return redirect(url_for('main.admin'))
+
     return render_template('admin.html', users=users, contact_submissions=contact_submissions, blog_posts=blog_posts)
 
 
@@ -504,40 +534,3 @@ def blog_post(post_id):
     post = BlogPost.query.get_or_404(post_id)
     return render_template('blog/post.html', post=post)
 
-@bp.route('/blog/new', methods=['GET', 'POST'])
-@login_required
-def new_post():
-    if request.method == 'POST':
-        title = request.form['title']
-        content = request.form['content']
-        post = BlogPost(title=title, content=content, author=current_user)
-        db.session.add(post)
-        db.session.commit()
-        flash('Your post has been created!', 'success')
-        return redirect(url_for('main.blog'))
-    return render_template('blog/new_post.html')
-
-@bp.route('/blog/<int:post_id>/edit', methods=['GET', 'POST'])
-@login_required
-def edit_post(post_id):
-    post = BlogPost.query.get_or_404(post_id)
-    if post.author != current_user:
-        abort(403)
-    if request.method == 'POST':
-        post.title = request.form['title']
-        post.content = request.form['content']
-        db.session.commit()
-        flash('Your post has been updated!', 'success')
-        return redirect(url_for('main.blog_post', post_id=post.id))
-    return render_template('blog/edit_post.html', post=post)
-
-@bp.route('/blog/<int:post_id>/delete', methods=['POST'])
-@login_required
-def delete_post(post_id):
-    post = BlogPost.query.get_or_404(post_id)
-    if post.author != current_user:
-        abort(403)
-    db.session.delete(post)
-    db.session.commit()
-    flash('Your post has been deleted!', 'success')
-    return redirect(url_for('main.blog'))
